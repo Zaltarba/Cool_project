@@ -1,10 +1,10 @@
-matplotlib @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_42_ot0zpzy/croot/matplotlib-suite_1693812472014/work
-matplotlib-inline==0.1.6
-numpy @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_bdk7p7tnsw/croot/numpy_and_numpy_base_1682520579379/work
-numpydoc @ file:///Users/ec2-user/ci_py311/numpydoc_1678393034712/work
-openpyxl==3.0.10
-pandas @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_dflcdcqtvf/croot/pandas_1692297394605/work
-plotly @ file:///Users/ec2-user/ci_py311/plotly_1678382250051/work
-streamlit==1.28.0
-tqdm @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_03acd6t6ca/croot/tqdm_1679561866522/work
-yfinance==0.2.31
+streamlit
+pandas
+pandas-datareader
+PyPortfolioOpt
+plotly
+matplotlib
+seaborn
+gunicorn
+yfinance
+numpy 
