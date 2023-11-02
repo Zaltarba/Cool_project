@@ -3,7 +3,7 @@ pandas
 pandas-datareader
 PyPortfolioOpt
 plotly
-matplotlib version = 1.5.1
+matplotlib
 seaborn
 gunicorn
 yfinance
