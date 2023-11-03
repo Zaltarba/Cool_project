@@ -113,10 +113,9 @@ try:
 		st.subheader('Sharpe Ratio: {}'.format(sharpe_ratio.round(2)))
 	with col3:
 		st.plotly_chart(fig_cum_returns_optimized)
-	st.subheader("Optimized Max Sharpe Portfolio Performance")
-
 	col1, col2 = st.columns(2)
 	with col1:
+		st.subheader("Optimized Max Sharpe Portfolio Performance")
 		st.image(fig_efficient_frontier)
 	with col2:
 		st.plotly_chart(fig_corr) # fig_corr is not a plotly chart
