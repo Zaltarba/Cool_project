@@ -67,3 +67,11 @@ with col2:
     fig = px.line(df, labels={"index": "Time Steps", "value": "Stock Price"}, title="Simulated Price Paths")
 
     st.plotly_chart(fig, use_container_width=True)
+
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
