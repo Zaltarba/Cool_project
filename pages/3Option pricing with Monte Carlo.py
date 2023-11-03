@@ -6,9 +6,9 @@ import math
 
 # Function to calculate the option payoff based on option type
 def calculate_option_payoff(option_type, stock_price, strike_price):
-    if option_type == "Call":
+    if option_type == "European Call":
         return max(stock_price - strike_price, 0)
-    elif option_type == "Put":
+    elif option_type == "European Put":
         return max(strike_price - stock_price, 0)
 
 # Function to perform Monte Carlo simulation for option pricing and visualize results
@@ -43,7 +43,7 @@ st.write("This app performs Monte Carlo simulation for option pricing and visual
 col1, col2 = st.columns([0.3, 0.7], gap = 'large')
 with col1:
     st.write("## Input Parameters")
-    option_type = st.selectbox("Option Type", ("Call", "Put"))  # "Call" or "Put"  
+    option_type = st.selectbox("Option Type", ("European Call", "European Put"))  # "European Call" or "European Put"  
     stock_price = st.number_input("Stock Price", value=100)
     strike_price = st.number_input("Strike Price", value=100)
     volatility = st.number_input("Volatility", value=0.2)  # Annualized volatility (e.g., 20%)
