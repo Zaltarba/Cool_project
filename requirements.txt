@@ -9,3 +9,4 @@ gunicorn
 yfinance
 numpy 
 prophet==1.1.2
+holidays
