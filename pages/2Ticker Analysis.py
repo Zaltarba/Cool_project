@@ -4,6 +4,7 @@ st.set_page_config(
     page_title="Ticker Analysis",
     page_icon="📈", 
 )
+st.sidebar.success("Select a feature above.")
 
 st.write("# Ticker Analysis")
 

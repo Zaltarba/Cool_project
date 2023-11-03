@@ -19,7 +19,7 @@ st.set_page_config(
 	layout="wide", 
     page_icon="👋",
 )
-
+st.sidebar.success("Select a feature above.")
 st.header("# Portfolio Optimizer")	
 
 def plot_cum_returns(data, title):    
