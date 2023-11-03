@@ -61,6 +61,13 @@ with col2:
 
 r = st.number_input("Risk free rate", value=0.02)
 
+expected_return_method = st.selectbox(
+	"Method for computation of expected values", 
+	("Mean historical return", "Exponentially-weighted mean historical return")) 
+
+if expected_return_method == "Exponentially-weighted mean historical return":
+	span = st.number_input("Time span for the EMA", value=500)
+
 tickers_string = st.text_input('Enter all stock tickers to be included in portfolio separated by commas \
 								WITHOUT spaces, e.g. "MA,META,V,AMZN,JPM,BA"', '').upper()
 tickers = tickers_string.split(',')
@@ -77,7 +84,10 @@ try:
 	fig_corr = px.imshow(corr_df, text_auto=True, title = 'Correlation between Stocks')
 		
 	# Calculate expected returns and sample covariance matrix for portfolio optimization later
-	mu = expected_returns.mean_historical_return(stocks_df)
+	if expected_return_method == "Mean historical return":
+		mu = expected_returns.mean_historical_return(stocks_df)
+	elif expected_return_method == "Exponentially-weighted mean historical return":
+		mu = expected_returns.ema_historical_return(stocks_df, span=span)
 	S = risk_models.sample_cov(stocks_df)
 	
 	# Plot efficient frontier curve
