@@ -33,7 +33,7 @@ def plot_cum_returns(data, title):
 def plot_efficient_frontier_and_max_sharpe(mu, S, r:float): 
 	# Optimize portfolio for max Sharpe ratio and plot it out with efficient frontier curve
 	ef = EfficientFrontier(mu, S)
-	fig, ax = plt.subplots(figsize=(8,4.5))
+	fig, ax = plt.subplots(figsize=(0.75*8,0.75*4.5))
 	ef_max_sharpe = copy.deepcopy(ef)
 	#plotting.plot_efficient_frontier(ef, ax=ax, show_assets=False)
 	# Find the max sharpe portfolio
@@ -115,7 +115,7 @@ try:
 		st.plotly_chart(fig_cum_returns_optimized)
 	col1, col2 = st.columns(2)
 	with col1:
-		st.write("##### Optimized Max Sharpe Portfolio Performance")
+		st.write("###### Optimized Max Sharpe Portfolio Performance")
 		st.image(fig_efficient_frontier)
 	with col2:
 		st.plotly_chart(fig_corr) # fig_corr is not a plotly chart
