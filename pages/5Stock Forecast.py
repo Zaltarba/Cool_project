@@ -62,3 +62,11 @@ st.plotly_chart(fig1)
 st.write("Forecast components")
 fig2 = m.plot_components(forecast)
 st.write(fig2)
+
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
