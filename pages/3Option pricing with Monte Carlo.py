@@ -5,7 +5,7 @@ import pandas as pd
 
 # set layout to wide
 st.set_page_config(layout="wide")
-
+st.sidebar.success("Select a feature above.")
 st.title("Monte Carlo Simulation for Option Pricing")
 st.write("This app performs Monte Carlo simulation for option pricing and visualizes the simulated price paths.")
 
