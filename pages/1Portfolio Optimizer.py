@@ -20,7 +20,7 @@ st.set_page_config(
     page_icon="👋",
 )
 st.sidebar.success("Select a feature above.")
-st.header("# Portfolio Optimizer")	
+st.write("# Portfolio Optimizer")	
 
 plt.style.use('dark_background')
 
@@ -115,7 +115,7 @@ try:
 		st.plotly_chart(fig_cum_returns_optimized)
 	col1, col2 = st.columns(2)
 	with col1:
-		st.subsubheader("Optimized Max Sharpe Portfolio Performance")
+		st.write("## Optimized Max Sharpe Portfolio Performance")
 		st.image(fig_efficient_frontier)
 	with col2:
 		st.plotly_chart(fig_corr) # fig_corr is not a plotly chart
