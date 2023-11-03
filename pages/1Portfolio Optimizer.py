@@ -103,7 +103,7 @@ try:
 	
 	# Display everything on Streamlit
 	st.subheader("Your Portfolio Consists of {} Stocks".format(tickers_string))	
-	col1, col2, col3 = st.columns(3)
+	col1, col2, col3 = st.columns([1, 1, 2])
 	with col1:
 		st.subheader("Optimized Max Sharpe Portfolio Weights")
 		st.dataframe(weights_df)
