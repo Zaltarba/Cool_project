@@ -8,3 +8,4 @@ seaborn
 gunicorn
 yfinance
 numpy 
+fbprophet
