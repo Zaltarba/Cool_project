@@ -57,7 +57,7 @@ with col1:
 with col2:
 	end_date = st.date_input("End Date") # it defaults to current date
 
-r = st.number_input("Risk free rate", value=0.2)
+r = st.number_input("Risk free rate", value=0.02)
 
 tickers_string = st.text_input('Enter all stock tickers to be included in portfolio separated by commas \
 								WITHOUT spaces, e.g. "MA,META,V,AMZN,JPM,BA"', '').upper()
@@ -85,7 +85,7 @@ try:
 	
 	# Get optimized weights
 	ef = EfficientFrontier(mu, S)
-	ef.max_sharpe(risk_free_rate=0.02)
+	ef.max_sharpe(risk_free_rate=r)
 	weights = ef.clean_weights()
 	expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance()
 	weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
