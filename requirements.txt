@@ -8,4 +8,4 @@ seaborn
 gunicorn
 yfinance
 numpy 
-fbprophet==0.5
+prophet

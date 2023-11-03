@@ -9,7 +9,13 @@ from plotly import graph_objs as go
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
-st.title('Stock Forecast App')
+st.set_page_config(
+    page_title="Portfolio Optimizer",
+	layout="wide", 
+    page_icon="👋",
+)
+st.sidebar.success("Select a feature above.")
+st.write("# Stock Forecast")	
 
 stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
 selected_stock = st.selectbox('Select dataset for prediction', stocks)
