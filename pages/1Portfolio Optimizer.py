@@ -103,19 +103,20 @@ try:
 	
 	# Display everything on Streamlit
 	st.subheader("Your Portfolio Consists of {} Stocks".format(tickers_string))	
-	col1, col2 = st.columns(2)
+	col1, col2, col3 = st.columns(3)
 	with col1:
 		st.subheader("Optimized Max Sharpe Portfolio Weights")
 		st.dataframe(weights_df)
 	with col2:
 		st.plotly_chart(fig_cum_returns_optimized)
-	
+	with col3:
+		st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
+		st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
+		st.subheader('Sharpe Ratio: {}'.format(sharpe_ratio.round(2)))
+		
 	st.subheader("Optimized Max Sharpe Portfolio Performance")
 	st.image(fig_efficient_frontier)
 	
-	st.subheader('Expected annual return: {}%'.format((expected_annual_return*100).round(2)))
-	st.subheader('Annual volatility: {}%'.format((annual_volatility*100).round(2)))
-	st.subheader('Sharpe Ratio: {}'.format(sharpe_ratio.round(2)))
 	
 	st.plotly_chart(fig_corr) # fig_corr is not a plotly chart
 	st.plotly_chart(fig_price)
