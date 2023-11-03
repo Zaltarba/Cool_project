@@ -8,4 +8,4 @@ seaborn
 gunicorn
 yfinance
 numpy 
-prophet
+prophet==1.1.2
