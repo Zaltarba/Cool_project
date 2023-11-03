@@ -28,14 +28,14 @@ def plot_cum_returns(data, title):
 	fig = px.line(daily_cum_returns, title=title)
 	return fig
 	
-def plot_efficient_frontier_and_max_sharpe(mu, S): 
+def plot_efficient_frontier_and_max_sharpe(mu, S, r:float): 
 	# Optimize portfolio for max Sharpe ratio and plot it out with efficient frontier curve
 	ef = EfficientFrontier(mu, S)
 	fig, ax = plt.subplots(figsize=(6,4))
 	ef_max_sharpe = copy.deepcopy(ef)
 	#plotting.plot_efficient_frontier(ef, ax=ax, show_assets=False)
 	# Find the max sharpe portfolio
-	ef_max_sharpe.max_sharpe(risk_free_rate=0.02)
+	ef_max_sharpe.max_sharpe(risk_free_rate=r)
 	ret_tangent, std_tangent, _ = ef_max_sharpe.portfolio_performance()
 	ax.scatter(std_tangent, ret_tangent, marker="*", s=100, c="r", label="Max Sharpe")
 	# Generate random portfolios
@@ -57,6 +57,8 @@ with col1:
 with col2:
 	end_date = st.date_input("End Date") # it defaults to current date
 
+r = st.number_input("Risk free rate", value=0.2)
+
 tickers_string = st.text_input('Enter all stock tickers to be included in portfolio separated by commas \
 								WITHOUT spaces, e.g. "MA,META,V,AMZN,JPM,BA"', '').upper()
 tickers = tickers_string.split(',')
@@ -77,7 +79,7 @@ try:
 	S = risk_models.sample_cov(stocks_df)
 	
 	# Plot efficient frontier curve
-	fig = plot_efficient_frontier_and_max_sharpe(mu, S)
+	fig = plot_efficient_frontier_and_max_sharpe(mu, S, r)
 	fig_efficient_frontier = BytesIO()
 	fig.savefig(fig_efficient_frontier, format="png")
 	
