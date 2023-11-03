@@ -22,6 +22,8 @@ st.set_page_config(
 st.sidebar.success("Select a feature above.")
 st.header("# Portfolio Optimizer")	
 
+plt.style.use('dark_background')
+
 def plot_cum_returns(data, title):    
 	daily_cum_returns = 1 + data.dropna().pct_change()
 	daily_cum_returns = daily_cum_returns.cumprod()*100
