@@ -103,10 +103,12 @@ try:
 	
 	# Display everything on Streamlit
 	st.subheader("Your Portfolio Consists of {} Stocks".format(tickers_string))	
-	st.plotly_chart(fig_cum_returns_optimized)
-	
-	st.subheader("Optimized Max Sharpe Portfolio Weights")
-	st.dataframe(weights_df)
+	col1, col2 = st.columns(2)
+	with col1:
+		st.subheader("Optimized Max Sharpe Portfolio Weights")
+		st.dataframe(weights_df)
+	with col2:
+		st.plotly_chart(fig_cum_returns_optimized)
 	
 	st.subheader("Optimized Max Sharpe Portfolio Performance")
 	st.image(fig_efficient_frontier)
