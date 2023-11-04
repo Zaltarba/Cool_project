@@ -122,6 +122,7 @@ if st.button('Analyze Portfolio'):
 		weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
 		weights_df.columns = ['weights']
 		
+		weights, expected_annual_return, annual_volatility, sharpe_ratio = perform_portfolio_optimization(mu, S, r)
 		# Calculate returns of portfolio with optimized weights
 		stocks_df['Optimized Portfolio'] = 0
 		for ticker, weight in weights.items():
