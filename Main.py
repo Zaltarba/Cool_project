@@ -25,17 +25,17 @@ def create_welcome_page():
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.image("path/to/analysis_image.png")  # Path to an image illustrating analysis
+            st.image("pics/img 1.png")  # Path to an image illustrating analysis
             st.write("#### In-Depth Analysis")
             st.write("Deep dive into your portfolio's performance metrics and growth potential.")
 
         with col2:
-            st.image("path/to/tracking_image.png")  # Path to an image illustrating tracking
+            st.image("pics/img 2.png")  # Path to an image illustrating tracking
             st.write("#### Real-Time Tracking")
             st.write("Stay updated with live data feeds and performance charts.")
 
         with col3:
-            st.image("path/to/forecast_image.png")  # Path to an image illustrating forecast
+            st.image("pics/img 3.png")  # Path to an image illustrating forecast
             st.write("#### Future Forecast")
             st.write("Utilize predictive analytics to forecast and strategize for future market conditions.")
 
