@@ -60,7 +60,44 @@ tickers = tickers_string.split(',')
 if st.button('Analyze Portfolio'):
     try:
         # Data fetching and processing code...
-
+		# Get Stock Prices using pandas_datareader Library	
+	    stocks_df = yf.download(tickers, start=start_date, end=end_date)['Adj Close']
+		# Plot Individual Stock Prices
+		fig_price = px.line(stocks_df, title='Price of Individual Stocks')
+		# Plot Individual Cumulative Returns
+		fig_cum_returns = plot_cum_returns(stocks_df, 'Cumulative Returns of Individual Stocks Starting with $100')
+		# Calculatge and Plot Correlation Matrix between Stocks
+		corr_df = stocks_df.corr().round(2)
+		fig_corr = px.imshow(corr_df, text_auto=True, title = 'Correlation between Stocks')
+			
+		# Calculate expected returns and sample covariance matrix for portfolio optimization later
+		if expected_return_method == "Mean historical return":
+			mu = expected_returns.mean_historical_return(stocks_df)
+		elif expected_return_method == "Exponentially-weighted mean historical return":
+			mu = expected_returns.ema_historical_return(stocks_df, span=span)
+		S = risk_models.sample_cov(stocks_df)
+		
+		# Plot efficient frontier curve
+		fig = plot_efficient_frontier_and_max_sharpe(mu, S, r)
+		fig_efficient_frontier = BytesIO()
+		fig.savefig(fig_efficient_frontier, format="png")
+		
+		# Get optimized weights
+		ef = EfficientFrontier(mu, S)
+		ef.max_sharpe(risk_free_rate=r)
+		weights = ef.clean_weights()
+		expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance()
+		weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
+		weights_df.columns = ['weights']
+		
+		# Calculate returns of portfolio with optimized weights
+		stocks_df['Optimized Portfolio'] = 0
+		for ticker, weight in weights.items():
+			stocks_df['Optimized Portfolio'] += stocks_df[ticker]*weight
+		
+		# Plot Cumulative Returns of Optimized Portfolio
+		fig_cum_returns_optimized = plot_cum_returns(stocks_df['Optimized Portfolio'], 'Cumulative Returns of Optimized Portfolio Starting with $100')
+		
         # Display everything on Streamlit using tabs
         tab1, tab2, tab3, tab4 = st.tabs(["Prices", "Correlations", "Returns", "Optimized Portfolio"])
         
