@@ -2,7 +2,7 @@ import streamlit as st
 
 # Function to create the welcome page
 def create_welcome_page():
-    st.title("Welcome to Asset Manager Plus!")
+    st.title("Welcome to the Gamma Project!")
 
     # Create a container for the main welcome message
     with st.container():
