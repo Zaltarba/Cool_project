@@ -68,7 +68,7 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r):
 		yaxis=dict(title='Expected Return'),
 		xaxis=dict(title='Volatility'),
 		showlegend=True,
-		margin=dict(t=20, b=20, l=20, r=20)
+		margin=dict(t=20, b=20, l=20, r=20), 
 		coloraxis_colorbar=dict(yanchor="top", y=1, x=0, ticks="outside")
 	)
 		
