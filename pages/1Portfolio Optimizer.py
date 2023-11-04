@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
 from io import BytesIO
+import plotly.graph_objs as go
+import copy
 
 st.set_page_config(
 	page_title="Portfolio Optimizer",
@@ -28,27 +30,50 @@ def plot_cum_returns(data, title):
 	fig = px.line(daily_cum_returns, title=title)
 	return fig
 
+def plot_efficient_frontier_and_max_sharpe(mu, S, r):
+    ef = EfficientFrontier(mu, S)
+    ef_max_sharpe = copy.deepcopy(ef)
+    
+    # Find the max sharpe portfolio
+    ef_max_sharpe.max_sharpe(risk_free_rate=r)
+    ret_tangent, std_tangent, _ = ef_max_sharpe.portfolio_performance()
+    
+    # Generate random portfolios
+    n_samples = 10000
+    w = np.random.dirichlet(np.ones(ef.n_assets), n_samples)
+    rets = w.dot(ef.expected_returns)
+    stds = np.sqrt(np.diag(w @ ef.cov_matrix @ w.T))
+    sharpes = rets / stds
+    
+    # Create a scatter plot of the random portfolios
+    scatter = go.Scatter(
+        x=stds, y=rets, mode='markers', 
+        marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True),
+        name='Random Portfolios'
+    )
+    
+    # Mark the max Sharpe portfolio
+    max_sharpe = go.Scatter(
+        x=[std_tangent], y=[ret_tangent], mode='markers', 
+        marker=dict(color='red', size=10, line=dict(width=2, color='DarkSlateGrey')),
+        name='Max Sharpe Ratio'
+    )
+    
+    # Combine plots
+    data = [scatter, max_sharpe]
+    
+    # Layout configuration
+    layout = go.Layout(
+        title='Efficient Frontier with Max Sharpe Ratio',
+        yaxis=dict(title='Expected Return'),
+        xaxis=dict(title='Volatility'),
+        showlegend=True,
+        margin=dict(t=20, b=20, l=20, r=20)
+    )
+    
+    fig = go.Figure(data=data, layout=layout)
+    return fig
 
-def plot_efficient_frontier_and_max_sharpe(mu, S, r:float): 
-	# Optimize portfolio for max Sharpe ratio and plot it out with efficient frontier curve
-	ef = EfficientFrontier(mu, S)
-	fig, ax = plt.subplots(figsize=(0.75*8,0.75*4.5))
-	ef_max_sharpe = copy.deepcopy(ef)
-	#plotting.plot_efficient_frontier(ef, ax=ax, show_assets=False)
-	# Find the max sharpe portfolio
-	ef_max_sharpe.max_sharpe(risk_free_rate=r)
-	ret_tangent, std_tangent, _ = ef_max_sharpe.portfolio_performance()
-	ax.scatter(std_tangent, ret_tangent, marker="*", s=100, c="r", label="Max Sharpe")
-	# Generate random portfolios
-	n_samples = 1000
-	w = np.random.dirichlet(np.ones(ef.n_assets), n_samples)
-	rets = w.dot(ef.expected_returns)
-	stds = np.sqrt(np.diag(w @ ef.cov_matrix @ w.T))
-	sharpes = rets / stds
-	ax.scatter(stds, rets, marker=".", c=sharpes, cmap="viridis_r")
-	# Output
-	ax.legend()
-	return fig
 		
 # Cache the stock data retrieval
 @st.cache_data
@@ -104,10 +129,10 @@ if st.button('Analyze Portfolio'):
 		mu, S = calculate_metrics(stocks_df, expected_return_method, span)
 
 		# Plot efficient frontier curve
-		fig = plot_efficient_frontier_and_max_sharpe(mu, S, r)
-		fig_efficient_frontier = BytesIO()
-		fig.savefig(fig_efficient_frontier, format="png")
-				
+		#fig = plot_efficient_frontier_and_max_sharpe(mu, S, r)
+		#fig_efficient_frontier = BytesIO()
+		#fig.savefig(fig_efficient_frontier, format="png")
+		fig_efficient_frontier = plot_efficient_frontier_and_max_sharpe(mu, S, r)	
 		# Get optimized weights
 		ef = EfficientFrontier(mu, S)
 		ef.max_sharpe(risk_free_rate=r)
@@ -152,15 +177,8 @@ if st.button('Analyze Portfolio'):
 			# Display the graphs in full width below the metrics and dataframe
 			st.plotly_chart(fig_cum_returns_optimized, use_container_width=True)
 
-			# If fig_efficient_frontier is a Matplotlib figure, use st.pyplot instead of st.image to display it
-			fig_test = plot_efficient_frontier_and_max_sharpe(mu, S, r)
-			st.pyplot(fig_test)
-
-			# If you want to retain st.image, ensure you're passing the correct buffer or file path
-			st.image(fig_efficient_frontier.getvalue())
-
+			st.plotly_chart(fig_efficient_frontier, use_container_width=True)
 			# Add some explanatory text or captions if needed
-			st.caption("Cumulative Returns of Optimized Portfolio")
 			st.caption("Efficient Frontier Graph") 
 
 	except ValueError:
