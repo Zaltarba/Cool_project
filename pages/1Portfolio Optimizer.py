@@ -153,15 +153,16 @@ if st.button('Analyze Portfolio'):
 			st.plotly_chart(fig_cum_returns_optimized, use_container_width=True)
 
 			# If fig_efficient_frontier is a Matplotlib figure, use st.pyplot instead of st.image to display it
-			st.pyplot(fig_efficient_frontier)
+			fig_test = plot_efficient_frontier_and_max_sharpe(mu, S, r)
+			st.pyplot(fig_test)
 
 			# If you want to retain st.image, ensure you're passing the correct buffer or file path
-			# st.image(fig_efficient_frontier.getvalue())
+			st.image(fig_efficient_frontier.getvalue())
 
 			# Add some explanatory text or captions if needed
 			st.caption("Cumulative Returns of Optimized Portfolio")
 			st.caption("Efficient Frontier Graph") 
-			
+
 	except ValueError:
 		st.error('Please enter valid stock tickers separated by commas WITHOUT spaces.')
 
