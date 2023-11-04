@@ -69,10 +69,10 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r):
 		xaxis=dict(title='Volatility'),
 		showlegend=True,
 		margin=dict(t=20, b=20, l=20, r=20)
+		coloraxis_colorbar=dict(yanchor="top", y=1, x=0, ticks="outside")
 	)
 		
 	fig = go.Figure(data=data, layout=layout)
-	fig.update_layout(coloraxis_colorbar=dict(yanchor="top", y=1, x=0, ticks="outside"))
 	return fig
 
 		
