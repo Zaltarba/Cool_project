@@ -2,13 +2,13 @@ import streamlit as st
 
 # Function to create the welcome page
 def create_welcome_page():
-    st.title("Welcome to the Gamma Project!")
+    st.title("Welcome to Gamma Project!")
 
     # Create a container for the main welcome message
     with st.container():
         st.write("## Empower Your Investment Decisions")
         st.markdown("""
-            Asset Manager Plus is your personal assistant for navigating the complexities of asset management.
+            The Gamma Project aims to assist you navigate the complexities of asset management.
             With our intuitive interface and powerful analysis tools, you can:
             
             - **Analyze** your asset allocation
