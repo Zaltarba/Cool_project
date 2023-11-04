@@ -81,6 +81,8 @@ with col4:
 
 if expected_return_method == "Exponentially-weighted mean historical return":
 	span = st.slider("Time span for the EMA", min_value=30, max_value=1000, value=500, step=10)
+else:
+	span = 0
 
 tickers_string = st.text_input(
 	'Enter stock tickers separated by commas WITHOUT spaces, e.g. "MA,META,V,AMZN,JPM,BA"',
