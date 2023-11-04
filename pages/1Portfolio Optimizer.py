@@ -182,6 +182,27 @@ if st.button('Analyze Portfolio'):
 	except ValueError:
 		st.error('Please enter valid stock tickers separated by commas WITHOUT spaces.')
 
+# Add a button and expander for the explanation of portfolio optimization
+if st.button('Learn More about Portfolio Optimization'):
+    with st.expander("How is portfolio optimization computed?"):
+        st.write("""
+            Portfolio optimization is the process of selecting the best portfolio (asset distribution), out of the set of all portfolios being considered, according to some objective. The objective typically maximizes factors such as expected return, and minimizes costs like financial risk.
+            
+            Factors that affect portfolio optimization include:
+            
+            - **Risk Preference:** How much risk is the investor willing to take.
+            - **Market Expectations:** Expected returns of the assets, which can be based on historical data or other prediction models.
+            - **Covariance Matrix:** It represents how the returns of the assets move together.
+            - **Constraints:** These may include budget constraints, risk constraints, or regulatory constraints.
+            
+            The **Efficient Frontier** is a key concept, representing the set of optimal portfolios that offer the highest expected return for a defined level of risk or the lowest risk for a given level of expected return.
+            
+            **Modern Portfolio Theory (MPT)** is a common method used, which relies on the variance of asset returns as a proxy for risk. The goal is to find the set of weights (the proportion of total portfolio value invested in each asset) that minimizes the portfolio variance for a given expected return.
+            
+            The portfolio with the highest Sharpe ratio (expected return minus the risk-free rate, divided by the standard deviation of portfolio return) is considered the most efficient under the MPT framework.
+            """)
+
+
 # Custom styles
 st.markdown(
 	"""
