@@ -18,7 +18,7 @@ import copy
 st.set_page_config(
 	page_title="Portfolio Optimizer",
 	layout="wide",
-	page_icon="📈",
+	page_icon="💸",
 )
 st.sidebar.success("Select a feature above.")
 st.title("Portfolio Optimizer 🚀")	
@@ -48,7 +48,7 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r):
 	# Create a scatter plot of the random portfolios
 	scatter = go.Scatter(
 		x=stds, y=rets, mode='markers', 
-		marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True),
+		marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True, colorbar=dict(x=-0.14)),
 		name='Random Portfolios'
 	)
 		
@@ -69,7 +69,6 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r):
 		xaxis=dict(title='Volatility'),
 		showlegend=True,
 		margin=dict(t=20, b=20, l=20, r=20), 
-		coloraxis_colorbar=dict(yanchor="top", y=1, x=0, ticks="outside")
 	)
 		
 	fig = go.Figure(data=data, layout=layout)
@@ -179,8 +178,6 @@ if st.button('Analyze Portfolio'):
 			st.plotly_chart(fig_cum_returns_optimized, use_container_width=True)
 
 			st.plotly_chart(fig_efficient_frontier, use_container_width=True)
-			# Add some explanatory text or captions if needed
-			st.caption("Efficient Frontier Graph") 
 
 	except ValueError:
 		st.error('Please enter valid stock tickers separated by commas WITHOUT spaces.')
