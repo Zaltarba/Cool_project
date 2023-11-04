@@ -56,7 +56,7 @@ def get_stock_data(tickers, start_date, end_date):
     return yf.download(tickers, start=start_date, end=end_date)['Adj Close']
 
 # Cache the calculations of expected returns and sample covariance
-@st.cache_ressource
+@st.cache_data
 def calculate_metrics(stocks_df, expected_return_method, span):
     if expected_return_method == "Mean historical return":
         mu = expected_returns.mean_historical_return(stocks_df)
