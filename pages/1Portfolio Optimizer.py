@@ -108,14 +108,17 @@ if st.button('Analyze Portfolio'):
 		# Calculate expected returns and sample covariance matrix for portfolio optimization later
 		
 		mu, S = calculate_metrics(stocks_df, expected_return_method, span)
+
 		# Plot efficient frontier curve
 		fig = plot_efficient_frontier_and_max_sharpe(mu, S, r)
 		fig_efficient_frontier = BytesIO()
 		fig.savefig(fig_efficient_frontier, format="png")
 				
 		# Get optimized weights
-		weights, perf = perform_portfolio_optimization(mu, S, r)
-		expected_annual_return, annual_volatility, sharpe_ratio = perf
+		ef = EfficientFrontier(mu, S)
+		ef.max_sharpe(risk_free_rate=r)
+		weights = ef.clean_weights()
+		expected_annual_return, annual_volatility, sharpe_ratio = ef.portfolio_performance()
 		weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
 		weights_df.columns = ['weights']
 		
