@@ -51,12 +51,12 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r:float):
 	return fig
 		
 # Cache the stock data retrieval
-@st.cache
+@st.cache_data
 def get_stock_data(tickers, start_date, end_date):
     return yf.download(tickers, start=start_date, end=end_date)['Adj Close']
 
 # Cache the calculations of expected returns and sample covariance
-@st.cache
+@st.cache_ressource
 def calculate_metrics(stocks_df, expected_return_method, span):
     if expected_return_method == "Mean historical return":
         mu = expected_returns.mean_historical_return(stocks_df)
@@ -64,14 +64,6 @@ def calculate_metrics(stocks_df, expected_return_method, span):
         mu = expected_returns.ema_historical_return(stocks_df, span=span)
     S = risk_models.sample_cov(stocks_df)
     return mu, S
-
-# Cache the portfolio optimization process
-@st.cache
-def perform_portfolio_optimization(mu, S, r):
-    ef = EfficientFrontier(mu, S)
-    ef.max_sharpe(risk_free_rate=r)
-    weights = ef.clean_weights()
-    return weights, *ef.portfolio_performance()
 
 # Main layout
 col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
@@ -122,7 +114,6 @@ if st.button('Analyze Portfolio'):
 		weights_df = pd.DataFrame.from_dict(weights, orient = 'index')
 		weights_df.columns = ['weights']
 		
-		weights, expected_annual_return, annual_volatility, sharpe_ratio = perform_portfolio_optimization(mu, S, r)
 		# Calculate returns of portfolio with optimized weights
 		stocks_df['Optimized Portfolio'] = 0
 		for ticker, weight in weights.items():
