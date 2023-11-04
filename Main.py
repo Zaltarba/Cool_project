@@ -1,35 +1,51 @@
 import streamlit as st
 
-st.set_page_config(
-    page_title="Welcome",
-    page_icon="👋",
-)
+# Function to create the welcome page
+def create_welcome_page():
+    st.title("Welcome to Asset Manager Plus!")
 
-st.write("# Welcome on my project ! 👋")
+    # Create a container for the main welcome message
+    with st.container():
+        st.write("## Empower Your Investment Decisions")
+        st.markdown("""
+            Asset Manager Plus is your personal assistant for navigating the complexities of asset management.
+            With our intuitive interface and powerful analysis tools, you can:
+            
+            - **Analyze** your asset allocation
+            - **Track** your investments' performance
+            - **Forecast** future trends with predictive analytics
+            - **Learn** with up-to-date financial insights
+            - **Optimize** your portfolio for better risk-adjusted returns
+            
+            Ready to take control of your financial future? Let's get started!
+        """)
 
-st.markdown(
-    """
-    Welcome on this website, this is a personnal project aiming to group 
-    in a user friendly interface tools needed for decision making in asset management
-    """
-    )
+    # Create columns for feature highlights
+    with st.container():
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.image("path/to/analysis_image.png")  # Path to an image illustrating analysis
+            st.write("#### In-Depth Analysis")
+            st.write("Deep dive into your portfolio's performance metrics and growth potential.")
 
-st.write("## About me")
+        with col2:
+            st.image("path/to/tracking_image.png")  # Path to an image illustrating tracking
+            st.write("#### Real-Time Tracking")
+            st.write("Stay updated with live data feeds and performance charts.")
 
-st.markdown(
-    """
-    Graduating student with in-depth knowledge in finance, machine 
-    learning, statistics and econometrics. Highly motivated for a quantitative researcher 
-    position involving the use of econometric methods. I am seeking full-time employment.
-    """
-    )
+        with col3:
+            st.image("path/to/forecast_image.png")  # Path to an image illustrating forecast
+            st.write("#### Future Forecast")
+            st.write("Utilize predictive analytics to forecast and strategize for future market conditions.")
 
-st.sidebar.success("Select a feature above.")
+    # Include a call-to-action button
+    with st.container():
+        st.write("---")
+        if st.button("Get Started"):
+            st.write("Navigating to the main dashboard...")  # Here you can redirect to another page or perform an action.
+            # Redirect to the main dashboard function or app page
+            # main_dashboard()  # Assuming you have a function that creates the main dashboard
 
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+# Call the function to render the welcome page
+create_welcome_page()
