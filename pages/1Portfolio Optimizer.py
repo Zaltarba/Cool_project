@@ -31,64 +31,65 @@ def plot_cum_returns(data, title):
 	return fig
 
 def plot_efficient_frontier_and_max_sharpe(mu, S, r):
-    ef = EfficientFrontier(mu, S)
-    ef_max_sharpe = copy.deepcopy(ef)
-    
-    # Find the max sharpe portfolio
-    ef_max_sharpe.max_sharpe(risk_free_rate=r)
-    ret_tangent, std_tangent, _ = ef_max_sharpe.portfolio_performance()
-    
-    # Generate random portfolios
-    n_samples = 10000
-    w = np.random.dirichlet(np.ones(ef.n_assets), n_samples)
-    rets = w.dot(ef.expected_returns)
-    stds = np.sqrt(np.diag(w @ ef.cov_matrix @ w.T))
-    sharpes = rets / stds
-    
-    # Create a scatter plot of the random portfolios
-    scatter = go.Scatter(
-        x=stds, y=rets, mode='markers', 
-        marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True),
-        name='Random Portfolios'
-    )
-    
-    # Mark the max Sharpe portfolio
-    max_sharpe = go.Scatter(
-        x=[std_tangent], y=[ret_tangent], mode='markers', 
-        marker=dict(color='red', size=10, line=dict(width=2, color='DarkSlateGrey')),
-        name='Max Sharpe Ratio'
-    )
-    
-    # Combine plots
-    data = [scatter, max_sharpe]
-    
-    # Layout configuration
-    layout = go.Layout(
-        title='Efficient Frontier with Max Sharpe Ratio',
-        yaxis=dict(title='Expected Return'),
-        xaxis=dict(title='Volatility'),
-        showlegend=True,
-        margin=dict(t=20, b=20, l=20, r=20)
-    )
-    
-    fig = go.Figure(data=data, layout=layout)
-    return fig
+	ef = EfficientFrontier(mu, S)
+	ef_max_sharpe = copy.deepcopy(ef)
+		
+	# Find the max sharpe portfolio
+	ef_max_sharpe.max_sharpe(risk_free_rate=r)
+	ret_tangent, std_tangent, _ = ef_max_sharpe.portfolio_performance()
+		
+	# Generate random portfolios
+	n_samples = 10000
+	w = np.random.dirichlet(np.ones(ef.n_assets), n_samples)
+	rets = w.dot(ef.expected_returns)
+	stds = np.sqrt(np.diag(w @ ef.cov_matrix @ w.T))
+	sharpes = rets / stds
+		
+	# Create a scatter plot of the random portfolios
+	scatter = go.Scatter(
+		x=stds, y=rets, mode='markers', 
+		marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True),
+		name='Random Portfolios'
+	)
+		
+	# Mark the max Sharpe portfolio
+	max_sharpe = go.Scatter(
+		x=[std_tangent], y=[ret_tangent], mode='markers', 
+		marker=dict(color='red', size=10, line=dict(width=2, color='DarkSlateGrey')),
+		name='Max Sharpe Ratio'
+	)
+		
+	# Combine plots
+	data = [scatter, max_sharpe]
+		
+	# Layout configuration
+	layout = go.Layout(
+		title='Efficient Frontier with Max Sharpe Ratio',
+		yaxis=dict(title='Expected Return'),
+		xaxis=dict(title='Volatility'),
+		showlegend=True,
+		margin=dict(t=20, b=20, l=20, r=20)
+	)
+		
+	fig = go.Figure(data=data, layout=layout)
+	fig.update_layout(coloraxis_colorbar=dict(yanchor="top", y=1, x=0, ticks="outside"))
+	return fig
 
 		
 # Cache the stock data retrieval
 @st.cache_data
 def get_stock_data(tickers, start_date, end_date):
-    return yf.download(tickers, start=start_date, end=end_date)['Adj Close']
+	return yf.download(tickers, start=start_date, end=end_date)['Adj Close']
 
 # Cache the calculations of expected returns and sample covariance
 @st.cache_data
 def calculate_metrics(stocks_df, expected_return_method, span):
-    if expected_return_method == "Mean historical return":
-        mu = expected_returns.mean_historical_return(stocks_df)
-    elif expected_return_method == "Exponentially-weighted mean historical return":
-        mu = expected_returns.ema_historical_return(stocks_df, span=span)
-    S = risk_models.sample_cov(stocks_df)
-    return mu, S
+	if expected_return_method == "Mean historical return":
+		mu = expected_returns.mean_historical_return(stocks_df)
+	elif expected_return_method == "Exponentially-weighted mean historical return":
+		mu = expected_returns.ema_historical_return(stocks_df, span=span)
+	S = risk_models.sample_cov(stocks_df)
+	return mu, S
 
 # Main layout
 col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
