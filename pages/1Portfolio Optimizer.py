@@ -48,7 +48,7 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r):
 	# Create a scatter plot of the random portfolios
 	scatter = go.Scatter(
 		x=stds, y=rets, mode='markers', 
-		marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True, colorbar=dict(x=-0.14)),
+		marker=dict(size=5, color=sharpes, colorscale='Viridis', showscale=True, colorbar=dict(x=-0.25)),
 		name='Random Portfolios'
 	)
 		
