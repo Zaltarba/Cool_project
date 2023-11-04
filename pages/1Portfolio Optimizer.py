@@ -135,16 +135,33 @@ if st.button('Analyze Portfolio'):
 		
 		with tab3:
 			st.plotly_chart(fig_cum_returns, use_container_width=True)
-		
+				
 		with tab4:
 			st.subheader('Portfolio Weights and Performance')
-			st.dataframe(weights_df)
+
+			# Use columns to arrange the data frame and metrics side by side
+			col1, col2 = st.columns((3, 1))
+			with col1:
+				st.dataframe(weights_df)
+
+			with col2:
+				st.metric(label="Expected Annual Return", value=f"{expected_annual_return:.2%}")
+				st.metric(label="Annual Volatility", value=f"{annual_volatility:.2%}")
+				st.metric(label="Sharpe Ratio", value=f"{sharpe_ratio:.2f}")
+
+			# Display the graphs in full width below the metrics and dataframe
 			st.plotly_chart(fig_cum_returns_optimized, use_container_width=True)
-			st.image(fig_efficient_frontier.getvalue())
-				 
-			st.metric(label="Expected Annual Return", value=f"{expected_annual_return:.2%}")
-			st.metric(label="Annual Volatility", value=f"{annual_volatility:.2%}")
-			st.metric(label="Sharpe Ratio", value=f"{sharpe_ratio:.2f}")	 
+
+			# If fig_efficient_frontier is a Matplotlib figure, use st.pyplot instead of st.image to display it
+			st.pyplot(fig_efficient_frontier)
+
+			# If you want to retain st.image, ensure you're passing the correct buffer or file path
+			# st.image(fig_efficient_frontier.getvalue())
+
+			# Add some explanatory text or captions if needed
+			st.caption("Cumulative Returns of Optimized Portfolio")
+			st.caption("Efficient Frontier Graph") 
+			
 	except ValueError:
 		st.error('Please enter valid stock tickers separated by commas WITHOUT spaces.')
 
