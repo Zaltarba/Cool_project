@@ -78,7 +78,7 @@ def plot_efficient_frontier_and_max_sharpe(mu, S, r):
 # Cache the stock data retrieval
 @st.cache_data
 def get_stock_data(tickers, start_date, end_date):
-	return yf.download(tickers, start=start_date, end=end_date)['Adj Close']
+	return yf.download(tickers, start=start_date, end=end_date)['Adj Close']  # We use the adjusted close price to avoid issues with dividends payings stocks
 
 # Cache the calculations of expected returns and sample covariance
 @st.cache_data
