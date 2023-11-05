@@ -14,7 +14,7 @@ from datetime import datetime
 from io import BytesIO
 import plotly.graph_objs as go
 import copy
-from utils.portfolio_optimizer import *
+from fonctions.portfolio_optimizer import *
 
 st.set_page_config(
 	page_title="Portfolio Optimizer",
