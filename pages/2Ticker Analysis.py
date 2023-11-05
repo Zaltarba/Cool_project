@@ -11,7 +11,7 @@ st.write("# Ticker Analysis")
 ticker = st.text_input('Enter ticker to be studied, e.g. MSFT, AAPL, GOOGL', '').upper()
 
 # Checkbox to run fundamental analysis
-run_analysis = st.checkbox('Run Fundamental Analysis')
+run_analysis = st.button('Run Fundamental Analysis')
 
 # Hide default Streamlit style
 hide_streamlit_style = """
