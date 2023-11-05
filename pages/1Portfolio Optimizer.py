@@ -14,7 +14,9 @@ from datetime import datetime
 from io import BytesIO
 import plotly.graph_objs as go
 import copy
+from wordcloud import WordCloud
 from fonctions.portfolio_optimizer import *
+
 
 st.set_page_config(
 	page_title="Portfolio Optimizer",
@@ -74,8 +76,11 @@ if st.button('Analyze Portfolio'):
 		weights_df.columns = ['weights']
 		# Calculate returns of portfolio with optimized weights
 		stocks_df['Optimized Portfolio'] = 0
+		text_wordcloud = ''
 		for ticker, weight in weights.items():
 			stocks_df['Optimized Portfolio'] += stocks_df[ticker]*weight
+			text_wordcloud += "ticker"*int(weight*1000)
+		wordcloud = WordCloud().generate(text_wordcloud)
 		# Plot Cumulative Returns of Optimized Portfolio
 		fig_cum_returns_optimized = plot_cum_returns(stocks_df['Optimized Portfolio'], 'Cumulative Returns of Optimized Portfolio Starting with $100')
 		
@@ -103,6 +108,11 @@ if st.button('Analyze Portfolio'):
 				st.metric(label="Expected Annual Return", value=f"{expected_annual_return:.2%}")
 				st.metric(label="Annual Volatility", value=f"{annual_volatility:.2%}")
 				st.metric(label="Sharpe Ratio", value=f"{sharpe_ratio:.2f}")
+
+			plt.imshow(wordcloud, interpolation='bilinear')
+			plt.axis("off")
+			plt.show()
+			st.pyplot()
 
 			# Display the graphs in full width below the metrics and dataframe
 			st.plotly_chart(fig_cum_returns_optimized, use_container_width=True)
