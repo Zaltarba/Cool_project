@@ -5,10 +5,6 @@ import plotly.express as px
 # Set page configuration
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
 
-# Sidebar for additional features
-st.sidebar.success("Select a feature above.")
-analysis_type = st.sidebar.selectbox("Choose Analysis Type", ["Fundamental Analysis", "News Feed"])
-
 # Main page title
 st.write("# Ticker Analysis")
 
@@ -39,7 +35,7 @@ def display_ticker_data(ticker_symbol):
 
             # Display basic info
             st.write(f"## Fundamental Analysis of {ticker_symbol}")
-            st.table(data.info.items())
+            st.table(data.info)
 
             # Display interactive chart
             fig = px.line(hist, x=hist.index, y="Close", title=f'{ticker_symbol} Closing Prices')
@@ -47,12 +43,5 @@ def display_ticker_data(ticker_symbol):
         except Exception as e:
             st.error(f"An error occurred: {e}")
 
-# Display based on the selected analysis type
-if analysis_type == "Fundamental Analysis":
-    display_ticker_data(ticker)
-elif analysis_type == "News Feed":
-    st.write("## News Feed")
-    # [Insert news feed functionality here]
-
-# Additional placeholder for future functionality
-# ...
+# Display data for the entered ticker
+display_ticker_data(ticker)
