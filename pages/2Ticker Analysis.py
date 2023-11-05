@@ -1,6 +1,6 @@
 import streamlit as st
 import yfinance as yf
-import plotly.express as px
+import pandas as pd
 
 # Set page configuration
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
@@ -30,28 +30,44 @@ def display_ticker_data(ticker_symbol):
             # Display basic info
             st.write(f"## Fundamental Analysis of {ticker_symbol}")
 
-            # Extract and display company information
+            # Display company information
             st.subheader("Company Information:")
             st.json(stock.info)
 
-            # Extract and display dividends
+            # Display dividends
             st.subheader("Dividends:")
-            st.line_chart(stock.dividends)
+            try:
+                st.line_chart(stock.dividends)
+            except Exception:
+                st.warning("Dividends data not available.")
 
-            # Extract and display stock splits
+            # Display stock splits
             st.subheader("Stock Splits:")
-            st.table(stock.splits)
+            try:
+                st.table(stock.splits)
+            except Exception:
+                st.warning("Stock splits data not available.")
 
-            # Extracts and displays some financials 
+            # Display financials
             st.subheader("Financials:")
-            st.table(stock.financials)
+            try:
+                financials = stock.financials
+                st.table(financials)
+                # Additional analysis can be added here
+            except Exception:
+                st.warning("Financials data not available.")
 
-            # Extracts and displays the balance sheet
+            # Display balance sheet
             st.subheader("Balance Sheet:")
-            st.table(stock.balance_sheet)
+            try:
+                balance_sheet = stock.balance_sheet
+                st.table(balance_sheet)
+                # Additional analysis can be added here
+            except Exception:
+                st.warning("Balance sheet data not available.")
 
         except Exception as e:
-            st.error(f"An error occurred: {e}")
+            st.error(f"An error occurred while fetching data for {ticker_symbol}: {e}")
 
 # Display data for the entered ticker
 display_ticker_data(ticker)
