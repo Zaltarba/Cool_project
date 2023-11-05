@@ -91,7 +91,16 @@ run_reddit_analysis = st.button('Run Reddit Analysis')
 
 # Run the analysis if the checkbox is checked
 if run_reddit_analysis:
-    get_reddit_news(ticker)
+    st.write("## Latest News on Reddit")
+    try:
+        news_items = get_reddit_news(ticker)
+        if news_items:
+            for item in news_items:
+                st.write(f"[{item['title']}]({item['url']})")
+        else:
+            st.write("No news found for this ticker.")
+    except Exception as e:
+        st.error(f"Error fetching news: {e}")
 
 # Hide default Streamlit style
 hide_streamlit_style = """
