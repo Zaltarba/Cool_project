@@ -173,8 +173,8 @@ if st.button('Analyze Portfolio'):
 				st.metric(label="Expected Annual Return", value=f"{expected_annual_return:.2%}")
 				st.metric(label="Annual Volatility", value=f"{annual_volatility:.2%}")
 				st.metric(label="Sharpe Ratio", value=f"{sharpe_ratio:.2f}")
-
-			st.pyplot(wordcloud)
+			#! Solve issue with the wordcloud 
+			#st.pyplot(wordcloud)
 
 			# Display the graphs in full width below the metrics and dataframe
 			st.plotly_chart(fig_cum_returns_optimized, use_container_width=True)
