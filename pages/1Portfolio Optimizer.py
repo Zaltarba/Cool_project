@@ -109,7 +109,7 @@ if expected_return_method == "Exponentially-weighted mean historical return":
 else:
 	span = 0
 
-ticker_options = ["AAPL", "GOOGL", "MSFT", "AMZN", "META", "MA", "V", "JPM", "BA", "NFLX"]
+ticker_options = pd.read_csv("data/all_tickers.csv").values[:, 0].tolist()
 
 # Use st.multiselect to let user select multiple ticker symbols
 tickers = st.multiselect(
