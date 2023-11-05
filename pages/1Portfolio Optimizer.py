@@ -109,11 +109,14 @@ if expected_return_method == "Exponentially-weighted mean historical return":
 else:
 	span = 0
 
-tickers_string = st.text_input(
-	'Enter stock tickers separated by commas WITHOUT spaces, e.g. "MA,META,V,AMZN,JPM,BA"',
-	''
-).upper()
-tickers = tickers_string.split(',')
+ticker_options = ["AAPL", "GOOGL", "MSFT", "AMZN", "META", "MA", "V", "JPM", "BA", "NFLX"]
+
+# Use st.multiselect to let user select multiple ticker symbols
+tickers = st.multiselect(
+    'Select stock tickers',
+    ticker_options,
+    default=["AAPL", "GOOGL"]  # You can set default selections here
+)
 
 if st.button('Analyze Portfolio'):
 	try :
