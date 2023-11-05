@@ -36,36 +36,40 @@ def display_ticker_data(ticker_symbol):
             # Import the ticker and its information
             stock = yf.Ticker(ticker_symbol)
 
-            # Display dividends
-            st.subheader("Dividends:")
-            try:
-                st.line_chart(stock.dividends)
-            except Exception:
-                st.warning("Dividends data not available.")
+            # Create tabs for different data sections
+            tab1, tab2, tab3, tab4 = st.tabs(["Dividends", "Stock Splits", "Financials", "Balance Sheet"])
 
-            # Display stock splits
-            st.subheader("Stock Splits:")
-            try:
-                st.table(stock.splits)
-            except Exception:
-                st.warning("Stock splits data not available.")
+            # Display dividends in the first tab
+            with tab1:
+                try:
+                    st.line_chart(stock.dividends)
+                except Exception:
+                    st.warning("Dividends data not available.")
 
-            # Display financials
-            st.subheader("Financials:")
-            try:
-                st.table(stock.financials)
-            except Exception:
-                st.warning("Financials data not available.")
+            # Display stock splits in the second tab
+            with tab2:
+                try:
+                    st.table(stock.splits)
+                except Exception:
+                    st.warning("Stock splits data not available.")
 
-            # Display balance sheet
-            st.subheader("Balance Sheet:")
-            try:
-                st.table(stock.balance_sheet)
-            except Exception:
-                st.warning("Balance sheet data not available.")
+            # Display financials in the third tab
+            with tab3:
+                try:
+                    st.table(stock.financials)
+                except Exception:
+                    st.warning("Financials data not available.")
+
+            # Display balance sheet in the fourth tab
+            with tab4:
+                try:
+                    st.table(stock.balance_sheet)
+                except Exception:
+                    st.warning("Balance sheet data not available.")
 
         except Exception as e:
             st.error(f"An error occurred while fetching data for {ticker_symbol}: {e}")
+
 
 # Run the analysis if the checkbox is checked
 if run_analysis:
