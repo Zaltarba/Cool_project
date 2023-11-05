@@ -1,5 +1,6 @@
 import streamlit as st
 import yfinance as yf
+import pandas as pd 
 
 # Set page configuration
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
@@ -8,7 +9,14 @@ st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
 st.write("# Ticker Analysis")
 
 # Input for ticker symbol
-ticker = st.text_input('Enter ticker to be studied, e.g. MSFT, AAPL, GOOGL', '').upper()
+ticker_options = pd.read_csv("data/all_tickers.csv").values[:, 0].tolist()
+
+# Use st.multiselect to let user select multiple ticker symbols
+tickers = st.multiselect(
+    'Select stock tickers',
+    ticker_options,
+    default=["AAPL",]  # You can set default selections here
+)
 
 # Checkbox to run fundamental analysis
 run_analysis = st.button('Run Fundamental Analysis')
