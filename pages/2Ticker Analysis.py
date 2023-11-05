@@ -91,7 +91,7 @@ run_reddit_analysis = st.button('Run Reddit Analysis')
 
 # Run the analysis if the checkbox is checked
 if run_reddit_analysis:
-    display_ticker_data(ticker)
+    get_reddit_news(ticker)
 
 # Hide default Streamlit style
 hide_streamlit_style = """
