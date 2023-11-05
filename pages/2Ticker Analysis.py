@@ -27,17 +27,25 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # Function to fetch and display data
 def display_ticker_data(ticker_symbol):
     if ticker_symbol:
-        # Fetch data
-        data = yf.Ticker(ticker_symbol)
-        hist = data.history(period="1mo")
+        try:
+            # Fetch data
+            data = yf.Ticker(ticker_symbol)
+            hist = data.history(period="1mo")
 
-        # Display basic info
-        st.write(f"## Fundamental Analysis of {ticker_symbol}")
-        st.table(data.info.items())
+            # Check if data is retrieved
+            if hist.empty:
+                st.error("No data found for the ticker symbol.")
+                return
 
-        # Display interactive chart
-        fig = px.line(hist, x=hist.index, y="Close", title=f'{ticker_symbol} Closing Prices')
-        st.plotly_chart(fig)
+            # Display basic info
+            st.write(f"## Fundamental Analysis of {ticker_symbol}")
+            st.table(data.info.items())
+
+            # Display interactive chart
+            fig = px.line(hist, x=hist.index, y="Close", title=f'{ticker_symbol} Closing Prices')
+            st.plotly_chart(fig)
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
 # Display based on the selected analysis type
 if analysis_type == "Fundamental Analysis":
@@ -46,6 +54,5 @@ elif analysis_type == "News Feed":
     st.write("## News Feed")
     # [Insert news feed functionality here]
 
-# Error handling for invalid tickers
-if ticker and not yf.Ticker(ticker).info:
-    st.error("Invalid ticker symbol. Please try again.")
+# Additional placeholder for future functionality
+# ...
