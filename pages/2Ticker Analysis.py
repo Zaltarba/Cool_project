@@ -1,6 +1,7 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd 
+import praw as praw
 
 # Set page configuration
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
@@ -18,16 +19,7 @@ ticker = st.selectbox(
 )
 
 # Checkbox to run fundamental analysis
-run_analysis = st.button('Run Fundamental Analysis')
-
-# Hide default Streamlit style
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+run_fundamental_analysis = st.button('Run Fundamental Analysis')
 
 # Function to fetch and display data
 def display_ticker_data(ticker_symbol):
@@ -72,5 +64,40 @@ def display_ticker_data(ticker_symbol):
 
 
 # Run the analysis if the checkbox is checked
-if run_analysis:
+if run_fundamental_analysis:
     display_ticker_data(ticker)
+
+# Reddit API credentials
+reddit_client_id = 'YOUR_CLIENT_ID'
+reddit_client_secret = 'YOUR_CLIENT_SECRET'
+reddit_user_agent = 'YOUR_USER_AGENT'
+
+# Initialize Reddit connection
+reddit = praw.Reddit(client_id=reddit_client_id,
+                     client_secret=reddit_client_secret,
+                     user_agent=reddit_user_agent)
+
+def get_reddit_news(ticker_symbol):
+    subreddit = reddit.subreddit('stocks')  # You can change the subreddit
+    news_posts = []
+
+    for post in subreddit.search(ticker_symbol, limit=10):  # Fetch top 10 relevant posts
+        news_posts.append({'title': post.title, 'url': post.url})
+
+    return news_posts
+
+# Checkbox to run fundamental analysis
+run_reddit_analysis = st.button('Run Reddit Analysis')
+
+# Run the analysis if the checkbox is checked
+if run_reddit_analysis:
+    display_ticker_data(ticker)
+
+# Hide default Streamlit style
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
