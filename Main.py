@@ -1,5 +1,8 @@
 import streamlit as st
 
+@st.cache_data
+def display_img_1():
+    st.image("pics/img 1.png")
 # Function to create the welcome page
 def create_welcome_page():
     st.title("Welcome to Gamma Project!")
@@ -25,7 +28,8 @@ def create_welcome_page():
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.image("pics/img 1.png")  # Path to an image illustrating analysis
+            #st.image("pics/img 1.png")  # Path to an image illustrating analysis
+            display_img_1()
             st.write("#### In-Depth Analysis")
             st.write("Deep dive into your portfolio's performance metrics and growth potential.")
 
