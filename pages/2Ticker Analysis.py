@@ -29,11 +29,7 @@ def display_ticker_data(ticker_symbol):
 
             # Display basic info
             st.write(f"## Fundamental Analysis of {ticker_symbol}")
-
-            # Display company information
-            st.subheader("Company Information:")
-            st.json(stock.info)
-
+            
             # Display dividends
             st.subheader("Dividends:")
             try:
