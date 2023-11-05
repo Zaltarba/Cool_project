@@ -14,8 +14,7 @@ ticker_options = pd.read_csv("data/all_tickers.csv").values[:, 0].tolist()
 # Use st.multiselect to let user select multiple ticker symbols
 tickers = st.selectbox(
     'Select stock tickers',
-    ticker_options,
-    default="AAPL",  # You can set default selections here
+    ticker_options, 
 )
 
 # Checkbox to run fundamental analysis
