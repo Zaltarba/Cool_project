@@ -20,11 +20,6 @@ ticker = st.selectbox(
     ticker_options, 
 )
 
-if 'reddit_news_data' not in st.session_state:
-    st.session_state['reddit_news_data'] = None
-
-if 'comment_analysis_data' not in st.session_state:
-    st.session_state['comment_analysis_data'] = None
 # Checkbox to run fundamental analysis
 run_fundamental_analysis = st.button('Run Fundamental Analysis')
 
@@ -112,7 +107,7 @@ def get_reddit_news(ticker_symbol, subreddits=None):
 run_reddit_analysis = st.button('Run Reddit Analysis')
 
 # Run the analysis if the checkbox is checked
-if st.session_state['reddit_news_data']:
+if run_reddit_analysis:
     st.write("## Latest News on Reddit")
     try:
         news_items = get_reddit_news(ticker, selected_subreddits)
@@ -153,7 +148,7 @@ def get_comment_data(ticker_symbol, subreddit_list, post_limit=10, comment_limit
 
 run_analysis = st.button('Run Analysis')
 
-if st.session_state['comment_analysis_data']:
+if run_analysis:
     if not selected_subreddits:
         st.error("Please select at least one subreddit.")
     else:
