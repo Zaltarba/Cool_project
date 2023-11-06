@@ -72,17 +72,28 @@ reddit_client_id = 'tTKTJ5YX5qM2ej16P4Oofg'
 reddit_client_secret = '9_iF4UzlsCZdcvQETlpbmf62-Ovd4w'
 reddit_user_agent = 'streamlit.com.gamma.myredditapp:v1.2.3 (by /u/daniel98smith)'
 
+
 # Initialize Reddit connection
 reddit = praw.Reddit(client_id=reddit_client_id,
                      client_secret=reddit_client_secret,
                      user_agent=reddit_user_agent)
 
-def get_reddit_news(ticker_symbol):
-    subreddit = reddit.subreddit('stocks')  # You can change the subreddit
+def get_reddit_news(ticker_symbol, subreddits=None):
+    if subreddits is None:
+        subreddits = ['stocks', 'investing', 'StockMarket', 'wallstreetbets']  # Default subreddits
+
     news_posts = []
 
-    for post in subreddit.search(ticker_symbol, limit=10):  # Fetch top 10 relevant posts
-        news_posts.append({'title': post.title, 'url': post.url})
+    for subreddit_name in subreddits:
+        subreddit = reddit.subreddit(subreddit_name)
+        
+        # Fetch top popular posts
+        for post in subreddit.search(ticker_symbol, limit=5, sort='hot'):  
+            news_posts.append({'title': post.title, 'url': post.url, 'subreddit': subreddit_name, 'type': 'popular'})
+
+        # Fetch latest posts
+        for post in subreddit.search(ticker_symbol, limit=5, sort='new'):
+            news_posts.append({'title': post.title, 'url': post.url, 'subreddit': subreddit_name, 'type': 'latest'})
 
     return news_posts
 
@@ -95,8 +106,13 @@ if run_reddit_analysis:
     try:
         news_items = get_reddit_news(ticker)
         if news_items:
-            for item in news_items:
-                st.write(f"[{item['title']}]({item['url']})")
+            tab1, tab2 = st.tabs(["Popular News", "Latest News"])
+            with tab1:
+                for item in [ni for ni in news_items if ni['type'] == 'popular']:
+                    st.write(f"[{item['title']}]({item['url']}) - {item['subreddit']}")
+            with tab2:
+                for item in [ni for ni in news_items if ni['type'] == 'latest']:
+                    st.write(f"[{item['title']}]({item['url']}) - {item['subreddit']}")
         else:
             st.write("No news found for this ticker.")
     except Exception as e:
