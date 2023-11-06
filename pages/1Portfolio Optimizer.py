@@ -86,7 +86,7 @@ def calculate_metrics(stocks_df, expected_return_method, span):
 st.set_page_config(
 	page_title="Portfolio Optimizer",
 	layout="wide",
-	page_icon="💸",
+	page_icon="🚀",
 )
 st.sidebar.success("Select a feature above.")
 st.title("Portfolio Optimizer 🚀")	
