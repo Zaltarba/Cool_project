@@ -172,6 +172,8 @@ if run_analysis:
                 plt.imshow(wordcloud, interpolation='bilinear')
                 plt.axis("off")
                 st.pyplot(plt)
+                # Clear the current figure to ensure it does not interfere with future plots
+                plt.clf()
             else:
                 st.write("No comments found for word cloud.")
 
