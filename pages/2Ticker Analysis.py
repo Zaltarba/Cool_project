@@ -3,7 +3,8 @@ import yfinance as yf
 import pandas as pd 
 import praw as praw
 import textblob as textblob
-
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 # Set page configuration
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
 
@@ -119,7 +120,8 @@ if run_reddit_analysis:
     except Exception as e:
         st.error(f"Error fetching news: {e}")
 
-def get_comment_sentiment(ticker_symbol, subreddit_list=['stocks', 'investing', 'StockMarket'], post_limit=10, comment_limit=10):
+def get_comment_data(ticker_symbol, subreddit_list, post_limit=10, comment_limit=10):
+    all_comments = []
     sentiment_scores = []
 
     total_posts = len(subreddit_list) * post_limit
@@ -131,32 +133,51 @@ def get_comment_sentiment(ticker_symbol, subreddit_list=['stocks', 'investing', 
         for post in subreddit.search(ticker_symbol, limit=post_limit):
             post.comments.replace_more(limit=0)
             for comment in post.comments.list()[:comment_limit]:
-                analysis = textblob.TextBlob(comment.body)
+                all_comments.append(comment.body)
+                analysis = TextBlob(comment.body)
                 sentiment_scores.append(analysis.sentiment.polarity)
 
             processed_posts += 1
-            progress_bar.progress(processed_posts / total_posts)  # Update progress bar
+            progress_bar.progress(processed_posts / total_posts)
 
-    if sentiment_scores:
-        average_sentiment = sum(sentiment_scores) / len(sentiment_scores)
-    else:
-        average_sentiment = 0
-
-    return average_sentiment
-
+    return all_comments, sentiment_scores
 
 # Streamlit Interface
-run_sentiment_analysis = st.button('Run Sentiment Analysis')
+default_subreddits = ['stocks', 'investing', 'StockMarket']
+selected_subreddits = st.multiselect('Choose subreddits for analysis:', default_subreddits, default=default_subreddits)
 
-if run_sentiment_analysis:
-    st.write("## Sentiment Analysis on Reddit Comments")
-    try:
+run_analysis = st.button('Run Analysis')
+
+if run_analysis:
+    if not selected_subreddits:
+        st.error("Please select at least one subreddit.")
+    else:
+        st.write("## Analysis on Reddit Comments")
         progress_bar = st.progress(0)
-        sentiment_score = get_comment_sentiment(ticker)
-        progress_bar.empty()
-        st.write(f"Average Sentiment Score for {ticker}: {sentiment_score:.2f}")
-    except Exception as e:
-        st.error(f"Error in sentiment analysis: {e}")
+        try:
+            comments, sentiment_scores = get_comment_data(ticker, selected_subreddits)
+            progress_bar.empty()
+
+            # Display average sentiment
+            if sentiment_scores:
+                average_sentiment = sum(sentiment_scores) / len(sentiment_scores)
+                st.write(f"Average Sentiment Score for {ticker}: {average_sentiment:.2f}")
+            else:
+                st.write("No comments found for sentiment analysis.")
+
+            # Generate and Display Word Cloud
+            if comments:
+                wordcloud = WordCloud(width=800, height=400, background_color ='white').generate(" ".join(comments))
+                plt.figure(figsize=(10, 5))
+                plt.imshow(wordcloud, interpolation='bilinear')
+                plt.axis("off")
+                st.pyplot(plt)
+            else:
+                st.write("No comments found for word cloud.")
+
+        except Exception as e:
+            progress_bar.empty()
+            st.error(f"Error in analysis: {e}")
 
 # Hide default Streamlit style
 hide_streamlit_style = """
