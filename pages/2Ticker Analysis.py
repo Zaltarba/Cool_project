@@ -167,10 +167,15 @@ if run_analysis:
 
             # Generate and Display Word Cloud
             if comments:
-                wordcloud = WordCloud(width=800, height=400, background_color ='white').generate(" ".join(comments))
-                plt.figure(figsize=(10, 5))
-                plt.imshow(wordcloud, interpolation='bilinear')
-                plt.axis("off")
+                # Create a word cloud object with desired parameters
+                wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(" ".join(comments))
+                
+                # Set up the figure size and layout with a black background
+                fig, ax = plt.subplots(figsize=(10, 5))
+                ax.imshow(wordcloud, interpolation='bilinear')
+                ax.axis("off")
+                ax.set_facecolor('black')  # Set the axis background color
+                fig.set_facecolor('black')  # Set the figure background color
                 st.pyplot(plt)
                 # Clear the current figure to ensure it does not interfere with future plots
                 plt.clf()
