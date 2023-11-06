@@ -2,7 +2,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd 
 import praw as praw
-import textblob as textblob
+from textblob import TextBlob
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 # Set page configuration
@@ -80,6 +80,10 @@ reddit = praw.Reddit(client_id=reddit_client_id,
                      client_secret=reddit_client_secret,
                      user_agent=reddit_user_agent)
 
+# Streamlit Interface
+default_subreddits = ['stocks', 'investing', 'StockMarket', 'wallstreetbets']
+selected_subreddits = st.multiselect('Choose subreddits for analysis:', default_subreddits, default=default_subreddits)
+
 def get_reddit_news(ticker_symbol, subreddits=None):
     if subreddits is None:
         subreddits = ['stocks', 'investing', 'StockMarket', 'wallstreetbets']  # Default subreddits
@@ -106,7 +110,7 @@ run_reddit_analysis = st.button('Run Reddit Analysis')
 if run_reddit_analysis:
     st.write("## Latest News on Reddit")
     try:
-        news_items = get_reddit_news(ticker)
+        news_items = get_reddit_news(ticker, selected_subreddits)
         if news_items:
             tab1, tab2 = st.tabs(["Popular News", "Latest News"])
             with tab1:
@@ -141,10 +145,6 @@ def get_comment_data(ticker_symbol, subreddit_list, post_limit=10, comment_limit
             progress_bar.progress(processed_posts / total_posts)
 
     return all_comments, sentiment_scores
-
-# Streamlit Interface
-default_subreddits = ['stocks', 'investing', 'StockMarket']
-selected_subreddits = st.multiselect('Choose subreddits for analysis:', default_subreddits, default=default_subreddits)
 
 run_analysis = st.button('Run Analysis')
 
