@@ -119,15 +119,17 @@ if run_reddit_analysis:
     except Exception as e:
         st.error(f"Error fetching news: {e}")
 
-def get_reddit_sentiment(ticker_symbol, subreddit_list=['stocks', 'investing', 'StockMarket', 'wallstreetbets'], limit=100):
+def get_comment_sentiment(ticker_symbol, subreddit_list=['stocks', 'investing', 'StockMarket', 'wallstreetbets'], post_limit=10, comment_limit=10):
     sentiment_scores = []
 
     for subreddit_name in subreddit_list:
         subreddit = reddit.subreddit(subreddit_name)
 
-        for post in subreddit.search(ticker_symbol, limit=limit):
-            analysis = textblob.TextBlob(post.title)
-            sentiment_scores.append(analysis.sentiment.polarity)  # Polarity score
+        for post in subreddit.search(ticker_symbol, limit=post_limit):
+            post.comments.replace_more(limit=0)  # Load all comments, limit=0 to avoid loading nested comments
+            for comment in post.comments.list()[:comment_limit]:  # Analyze top comments per post
+                analysis = textblob.TextBlob(comment.body)
+                sentiment_scores.append(analysis.sentiment.polarity)
 
     if sentiment_scores:
         average_sentiment = sum(sentiment_scores) / len(sentiment_scores)
@@ -140,9 +142,9 @@ def get_reddit_sentiment(ticker_symbol, subreddit_list=['stocks', 'investing', '
 run_sentiment_analysis = st.button('Run Sentiment Analysis')
 
 if run_sentiment_analysis:
-    st.write("## Sentiment Analysis on Reddit Posts")
+    st.write("## Sentiment Analysis on Reddit Comments")
     try:
-        sentiment_score = get_reddit_sentiment(ticker)
+        sentiment_score = get_comment_sentiment(ticker)
         st.write(f"Average Sentiment Score for {ticker}: {sentiment_score:.2f}")
     except Exception as e:
         st.error(f"Error in sentiment analysis: {e}")
