@@ -2,6 +2,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd 
 import praw as praw
+import textblob as textblob
 
 # Set page configuration
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
@@ -117,6 +118,34 @@ if run_reddit_analysis:
             st.write("No news found for this ticker.")
     except Exception as e:
         st.error(f"Error fetching news: {e}")
+
+def get_reddit_sentiment(ticker_symbol, subreddit_list=['stocks', 'investing', 'StockMarket', 'wallstreetbets'], limit=100):
+    sentiment_scores = []
+
+    for subreddit_name in subreddit_list:
+        subreddit = reddit.subreddit(subreddit_name)
+
+        for post in subreddit.search(ticker_symbol, limit=limit):
+            analysis = textblob.TextBlob(post.title)
+            sentiment_scores.append(analysis.sentiment.polarity)  # Polarity score
+
+    if sentiment_scores:
+        average_sentiment = sum(sentiment_scores) / len(sentiment_scores)
+    else:
+        average_sentiment = 0
+
+    return average_sentiment
+
+# Streamlit Interface
+run_sentiment_analysis = st.button('Run Sentiment Analysis')
+
+if run_sentiment_analysis:
+    st.write("## Sentiment Analysis on Reddit Posts")
+    try:
+        sentiment_score = get_reddit_sentiment(ticker)
+        st.write(f"Average Sentiment Score for {ticker}: {sentiment_score:.2f}")
+    except Exception as e:
+        st.error(f"Error in sentiment analysis: {e}")
 
 # Hide default Streamlit style
 hide_streamlit_style = """
