@@ -35,9 +35,9 @@ def monte_carlo_option_pricing(option_type, stock_price, strike_price, volatilit
     return option_price, price_paths
 
 # set layout to wide
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="Options Pricing", layout="wide", page_icon="💸")
 st.sidebar.success("Select a feature above.")
-st.title("Monte Carlo Simulation for Option Pricing")
+st.title("Option Pricing 💸")
 st.write("This app performs Monte Carlo simulation for option pricing and visualizes the simulated price paths.")
 
 col1, col2 = st.columns([0.3, 0.7], gap = 'large')

@@ -11,10 +11,10 @@ TODAY = date.today().strftime("%Y-%m-%d")
 st.set_page_config(
     page_title="Portfolio Optimizer",
 	layout="wide", 
-    page_icon="👋",
+    page_icon="💸",
 )
 st.sidebar.success("Select a feature above.")
-st.write("# Stock Forecast")	
+st.title("Stock Forecast 💸")	
 
 stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
 selected_stock = st.selectbox('Select dataset for prediction', stocks)

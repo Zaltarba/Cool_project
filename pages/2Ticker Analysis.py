@@ -7,7 +7,7 @@ import praw as praw
 st.set_page_config(page_title="Ticker Analysis", page_icon="📈")
 
 # Main page title
-st.write("# Ticker Analysis")
+st.title("Ticker Analysis 📈")
 
 # Input for ticker symbol
 ticker_options = pd.read_csv("data/all_tickers.csv").values[:, 0].tolist()

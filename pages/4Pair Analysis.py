@@ -3,11 +3,11 @@ import yfinance as yf
 
 st.set_page_config(
     page_title="Pair Analysis",
-    page_icon="📈", 
+    page_icon="💸", 
 )
 st.sidebar.success("Select a feature above.")
 
-st.write("# Pair Analysis")
+st.title("Pair Analysis 💸")
 
 col1, col2 = st.columns(2)
 with col1:
