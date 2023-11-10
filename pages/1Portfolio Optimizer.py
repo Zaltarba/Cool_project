@@ -15,6 +15,7 @@ from io import BytesIO
 import plotly.graph_objs as go
 import copy
 from wordcloud import WordCloud
+import pickle as pkl
 
 @st.cache_data
 def plot_cum_returns(data, title):	
@@ -110,14 +111,25 @@ if expected_return_method == "Exponentially-weighted mean historical return":
 else:
 	span = 0
 
-ticker_options = pd.read_csv("data/all_tickers.csv").values[:, 0].tolist()
+market = st.selectbox('Select market place', ['Nasdaq'])
+if market == 'Nasdaq':
+	# Read dictionary pkl file
+	with open('data/nasdaq_tickers_dictionnary.pkl', 'rb') as fp:
+		nasdaq_tickers_dictionnary = pkl.load(fp)
+	tickers_options = list(nasdaq_tickers_dictionnary.values())
 
-# Use st.multiselect to let user select multiple ticker symbols
-tickers = st.multiselect(
-    'Select stock tickers',
-    ticker_options,
-    default=["AAPL", "GOOGL"]  # You can set default selections here
-)
+	# Use st.multiselect to let user select multiple ticker symbols
+	tickers = st.multiselect(
+		'Select stock tickers',
+		tickers_options,
+		default=[ # You can set default selections here
+			nasdaq_tickers_dictionnary["AAPL"], nasdaq_tickers_dictionnary["META"], 
+			nasdaq_tickers_dictionnary["TSLA"], nasdaq_tickers_dictionnary["GOOGL"], 
+			nasdaq_tickers_dictionnary["NVDA"], nasdaq_tickers_dictionnary["AMZN"], 
+			nasdaq_tickers_dictionnary["MSFT"], nasdaq_tickers_dictionnary["INTC"], 
+            nasdaq_tickers_dictionnary["NFLX"],
+			]  
+	)
 
 if st.button('Analyze Portfolio'):
 	try :
