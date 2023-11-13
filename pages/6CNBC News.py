@@ -25,19 +25,19 @@ def display_feed(column, feed_url):
 
 # Displaying feeds in each column
 with col1:
-    st.header("Column 1")
+    st.header("Top News")
     display_feed(col1, feeds["Top News"])
 
 with col2:
-    st.header("Column 2")
+    st.header("World News")
     display_feed(col2, feeds["World News"])
 
 with col3:
-    st.header("Column 3")
+    st.header("US News")
     display_feed(col3, feeds["US News"])
 
 with col4:
-    st.header("Column 3")
+    st.header("Financial News")
     display_feed(col3, feeds["Finance"])
 
 # Add more columns/sections as needed
