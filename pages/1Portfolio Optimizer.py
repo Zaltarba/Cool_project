@@ -111,12 +111,13 @@ if expected_return_method == "Exponentially-weighted mean historical return":
 else:
 	span = 0
 
+
 market = st.selectbox('Select market place', ['Nasdaq'])
 if market == 'Nasdaq':
 	# Read dictionary pkl file
 	with open('data/nasdaq_tickers_dictionnary.pkl', 'rb') as fp:
 		nasdaq_tickers_dictionnary = pkl.load(fp)
-	tickers_options = list(nasdaq_tickers_dictionnary.values())
+	tickers_options = list(nasdaq_tickers_dictionnary.keys())
 
 	# Use st.multiselect to let user select multiple ticker symbols
 	compagnies = st.multiselect(
@@ -131,7 +132,7 @@ if market == 'Nasdaq':
 			]  
 	)
 	tickers = [nasdaq_tickers_dictionnary[ticker] for ticker in compagnies]
-	
+
 if st.button('Analyze Portfolio'):
 	try :
 		stocks_df = get_stock_data(tickers, start_date, end_date)
