@@ -13,7 +13,7 @@ feeds = {
 st.title("CNBC RSS Feed Reader")
 
 # Create a multi-column layout
-col1, col2, col3 = st.beta_columns(3)
+col1, col2, col3 = st.columns(3)
 
 # Function to display a single feed
 def display_feed(column, feed_url):
