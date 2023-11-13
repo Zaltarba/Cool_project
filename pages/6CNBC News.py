@@ -38,6 +38,6 @@ with col3:
 
 with col4:
     st.header("Financial News")
-    display_feed(col3, feeds["Finance"])
+    display_feed(col4, feeds["Finance"])
 
 # Add more columns/sections as needed
