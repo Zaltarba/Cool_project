@@ -13,7 +13,7 @@ feeds = {
 st.title("CNBC RSS Feed Reader")
 
 # Create a multi-column layout
-col1, col2, col3 = st.tabs(feeds.keys())
+col1, col2, col3, col4 = st.tabs(feeds.keys())
 
 # Function to display a single feed
 def display_feed(column, feed_url):
@@ -35,5 +35,9 @@ with col2:
 with col3:
     st.header("Column 3")
     display_feed(col3, feeds["US News"])
+
+with col4:
+    st.header("Column 3")
+    display_feed(col3, feeds["Finance"])
 
 # Add more columns/sections as needed
