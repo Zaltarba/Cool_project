@@ -124,11 +124,15 @@ if market == 'Nasdaq':
 		'Select stock tickers',
 		tickers_options,
 		default=[ # You can set default selections here
-			nasdaq_tickers_dictionnary["AAPL"], nasdaq_tickers_dictionnary["META"], 
-			nasdaq_tickers_dictionnary["TSLA"], nasdaq_tickers_dictionnary["GOOGL"], 
-			nasdaq_tickers_dictionnary["NVDA"], nasdaq_tickers_dictionnary["AMZN"], 
-			nasdaq_tickers_dictionnary["MSFT"], nasdaq_tickers_dictionnary["INTC"], 
-            nasdaq_tickers_dictionnary["NFLX"],
+			'Apple Inc. Common Stock',
+			'Meta Platforms Inc. Class A Common Stock',
+			'Tesla Inc. Common Stock',
+			'Alphabet Inc. Class A Common Stock',
+			'NVIDIA Corporation Common Stock',
+			'Amazon.com Inc. Common Stock',
+			'Microsoft Corporation Common Stock',
+			'Intel Corporation Common Stock',
+			'Netflix Inc. Common Stock'
 			]  
 	)
 	tickers = [nasdaq_tickers_dictionnary[ticker] for ticker in compagnies]
