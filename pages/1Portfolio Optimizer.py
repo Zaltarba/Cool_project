@@ -119,7 +119,7 @@ if market == 'Nasdaq':
 	tickers_options = list(nasdaq_tickers_dictionnary.values())
 
 	# Use st.multiselect to let user select multiple ticker symbols
-	tickers = st.multiselect(
+	compagnies = st.multiselect(
 		'Select stock tickers',
 		tickers_options,
 		default=[ # You can set default selections here
@@ -130,7 +130,8 @@ if market == 'Nasdaq':
             nasdaq_tickers_dictionnary["NFLX"],
 			]  
 	)
-
+	tickers = [nasdaq_tickers_dictionnary[ticker] for ticker in compagnies]
+	
 if st.button('Analyze Portfolio'):
 	try :
 		stocks_df = get_stock_data(tickers, start_date, end_date)
