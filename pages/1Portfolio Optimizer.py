@@ -123,8 +123,9 @@ if market == 'Nasdaq':
 	compagnies = st.multiselect(
 		'Select stock tickers',
 		tickers_options,
-		default=[ # You can set default selections here
-			"Apple Inc.", "Tesla, Inc."
+		default=[ 
+			# You can set default selections here
+			"Apple Inc. ", "Tesla, Inc.  "
 			]  
 	)
 	tickers = [nasdaq_tickers_dictionnary[ticker] for ticker in compagnies]
