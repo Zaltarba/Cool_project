@@ -124,15 +124,7 @@ if market == 'Nasdaq':
 		'Select stock tickers',
 		tickers_options,
 		default=[ # You can set default selections here
-			'Apple Inc. Common Stock',
-			'Meta Platforms Inc. Class A Common Stock',
-			'Tesla Inc. Common Stock',
-			'Alphabet Inc. Class A Common Stock',
-			'NVIDIA Corporation Common Stock',
-			'Amazon.com Inc. Common Stock',
-			'Microsoft Corporation Common Stock',
-			'Intel Corporation Common Stock',
-			'Netflix Inc. Common Stock'
+			"Apple Inc.", "Tesla, Inc.";
 			]  
 	)
 	tickers = [nasdaq_tickers_dictionnary[ticker] for ticker in compagnies]
