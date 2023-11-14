@@ -32,7 +32,7 @@ def display_feed(column, feed_url, feed_key):
     displayed_items = st.session_state[feed_key]
     column.write(displayed_items)
     # Process text for WordCloud
-    text = ""
+    text = " "
     for entry in feed.entries[:displayed_items]:
         try:
             text += entry.title
