@@ -45,11 +45,15 @@ def display_feed(column, feed_url):
     plt.clf()
 
     for entry in feed.entries:
-        if is_header:
+        try:
             column.subheader(entry.title)
-        if is_summary:
-            column.write(entry.summary)
-        column.markdown(f"[Read More]({entry.link})")
+            try:
+                column.write(entry.summary)
+            except AttributeError:
+                pass
+            column.markdown(f"[Read More]({entry.link})")
+        except AttributeError:
+            pass
 
 # Displaying feeds in each column
 for i, col in enumerate(columns):
