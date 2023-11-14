@@ -48,7 +48,7 @@ def increment_news_count(key):
 def display_feed(column, feed_url, feed_key):
 
     feed = feedparser.parse(feed_url)
-    displayed_items = 5 + st.session_state[feed_key]
+    displayed_items = st.session_state[feed_key]
 
     # Process text for WordCloud
     text = "test "
