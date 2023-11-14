@@ -20,7 +20,8 @@ col1, col2, col3, col4 = st.tabs(feeds.keys())
 # Function to display a single feed
 def display_feed(column, feed_url):
     feed = feedparser.parse(feed_url)
-    text = " ".join([entry.title + entry.summary for entry in feed.entries])
+    text = " ".join([entry.title for entry in feed.entries])
+    text += " ".join([entry.summary for entry in feed.entries])
     # Create a word cloud object with desired parameters
     wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(" ".join(text))
                 
