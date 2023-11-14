@@ -40,7 +40,7 @@ def increment_news_count(key):
 def display_feed(column, feed_url, feed_key):
 
     feed = feedparser.parse(feed_url)
-    displayed_items = st.session_state[feed_key]
+    displayed_items = 5 + st.session_state[feed_key]
 
     # Process text for WordCloud
     text = "test "
@@ -62,7 +62,7 @@ def display_feed(column, feed_url, feed_key):
     ax.axis("off")
     ax.set_facecolor('black')  # Set the axis background color
     fig.set_facecolor('black')  # Set the figure background color
-    st.pyplot(fig)
+    st.pyplot(fig, figsize=(4, 2.25))
     # Clear the current figure to ensure it does not interfere with future plots
     plt.clf()
 
