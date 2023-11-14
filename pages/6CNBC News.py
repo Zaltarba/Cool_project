@@ -55,7 +55,7 @@ def display_feed(column, feed_url, feed_key):
     # Create a word cloud object with desired parameters
     wordcloud = WordCloud(width=400, height=225, background_color='black', colormap='Pastel1').generate(text)            
     # Set up the figure size and layout with a black background
-    fig, ax = plt.subplots(figsize=(10, 5))
+    fig, ax = plt.subplots(figsize=(8, 4.5))
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.axis("off")
     ax.set_facecolor('black')  # Set the axis background color
