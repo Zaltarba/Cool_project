@@ -14,6 +14,12 @@ feeds = {
 }
 
 # Streamlit layout
+st.set_page_config(
+	page_title="CNBC RSS Feed Reade",
+	layout="wide",
+	page_icon="🚀",
+)
+st.sidebar.success("Select a feature above.")
 st.title("CNBC RSS Feed Reader")
 
 # Create a multi-column layout
@@ -23,6 +29,12 @@ columns = st.tabs(feeds.keys())
 for feed_key in feeds.keys():
     if feed_key not in st.session_state:
         st.session_state[feed_key] = 5  # Initialize with the first five news items
+
+# Callback function to increment news count
+def increment_news_count(key):
+    def increment():
+        st.session_state[key] += 5
+    return increment
 
 
 # Function to display a single feed
@@ -68,9 +80,9 @@ def display_feed(column, feed_url, feed_key):
         except AttributeError:
             pass
 
-    # Button to load more news
-    if column.button("Show More", key=feed_key):
-        st.session_state[feed_key] += 5
+    # Button to load more news with a callback function
+    column.button("Show More", key=feed_key, on_click=increment_news_count(feed_key))
+
 
 # Displaying feeds in each column
 for i, col in enumerate(columns):
