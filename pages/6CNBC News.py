@@ -28,6 +28,7 @@ def display_feed(column, feed_url, feed_key):
     if feed_key not in st.session_state:
         st.session_state[feed_key] = 5  # Displaying the first five news item initially
     displayed_items = st.session_state[feed_key]
+    column.write(displayed_items)
     # Process text for WordCloud
     text = ""
     for entry in feed.entries[:displayed_items]:
