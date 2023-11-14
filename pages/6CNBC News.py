@@ -53,18 +53,20 @@ def display_feed(column, feed_url, feed_key):
             text += entry.summary
         except AttributeError:
             pass
-
-    # Create a word cloud object with desired parameters
-    wordcloud = WordCloud(width=1600, height=900, background_color='black', colormap='Pastel1').generate(text)            
-    # Set up the figure size and layout with a black background
-    fig, ax = plt.subplots(figsize=(4, 2.25))
-    ax.imshow(wordcloud, interpolation='bilinear')
-    ax.axis("off")
-    ax.set_facecolor('black')  # Set the axis background color
-    fig.set_facecolor('black')  # Set the figure background color
-    st.pyplot(fig, figsize=(4, 2.25))
-    # Clear the current figure to ensure it does not interfere with future plots
-    plt.clf()
+        
+    col1, col2, col3 = st.columns([1, 1, 1])  # Adjust the ratio as needed
+    with col2:
+        # Create a word cloud object with desired parameters
+        wordcloud = WordCloud(width=1600, height=900, background_color='black', colormap='Pastel1').generate(text)            
+        # Set up the figure size and layout with a black background
+        fig, ax = plt.subplots(figsize=(4, 2.25))
+        ax.imshow(wordcloud, interpolation='bilinear')
+        ax.axis("off")
+        ax.set_facecolor('black')  # Set the axis background color
+        fig.set_facecolor('black')  # Set the figure background color
+        st.pyplot(fig)
+        # Clear the current figure to ensure it does not interfere with future plots
+        plt.clf()
 
     # Display the limited number of feed entries
     for entry in feed.entries[:displayed_items]:
