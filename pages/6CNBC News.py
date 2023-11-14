@@ -23,12 +23,14 @@ def display_feed(column, feed_url):
     feed = feedparser.parse(feed_url)
     try:
         text = " ".join([entry.title for entry in feed.entries])
+        is_header = True
     except AttributeError:
-        pass
+        is_header = False
     try:
         text += " ".join([entry.summary for entry in feed.entries])
+        is_summary = True
     except AttributeError:
-        pass
+        is_summary = False
 
     # Create a word cloud object with desired parameters
     wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(text)            
@@ -43,8 +45,10 @@ def display_feed(column, feed_url):
     plt.clf()
 
     for entry in feed.entries:
-        column.subheader(entry.title)
-        column.write(entry.summary)
+        if is_header:
+            column.subheader(entry.title)
+        if is_summary:
+            column.write(entry.summary)
         column.markdown(f"[Read More]({entry.link})")
 
 # Displaying feeds in each column
