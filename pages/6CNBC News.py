@@ -26,7 +26,7 @@ def display_feed(column, feed_url, feed_key):
     
     # Check if the feed key is in session state, if not initialize it
     if feed_key not in st.session_state:
-        st.session_state[feed_key] = 1  # Displaying the first news item initially
+        st.session_state[feed_key] = 5  # Displaying the first five news item initially
     displayed_items = st.session_state[feed_key]
     # Process text for WordCloud
     text = ""
