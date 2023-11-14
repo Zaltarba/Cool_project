@@ -35,13 +35,14 @@ def display_feed(column, feed_url, feed_key):
     text = ""
     for entry in feed.entries[:displayed_items]:
         try:
-            text += " ".join(entry.title)
+            text += entry.title
         except AttributeError:
             pass
         try:
-            text += " ".join(entry.summary)
+            text += entry.summary
         except AttributeError:
             pass
+
     column.write(text)
     # Create a word cloud object with desired parameters
     wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(text)            
