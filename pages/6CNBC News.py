@@ -8,6 +8,7 @@ feeds = {
     "World News": "https://www.cnbc.com/id/100727362/device/rss/rss.html",
     "US News": "https://www.cnbc.com/id/15837362/device/rss/rss.html",
     "Finance": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
+    "Investing":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069",
     # Add more feeds as needed
 }
 
@@ -15,7 +16,7 @@ feeds = {
 st.title("CNBC RSS Feed Reader")
 
 # Create a multi-column layout
-col1, col2, col3, col4 = st.tabs(feeds.keys())
+columns = st.tabs(feeds.keys())
 
 # Function to display a single feed
 def display_feed(column, feed_url):
@@ -41,20 +42,11 @@ def display_feed(column, feed_url):
         column.markdown(f"[Read More]({entry.link})")
 
 # Displaying feeds in each column
-with col1:
-    st.header("Top News")
-    display_feed(col1, feeds["Top News"])
+for i, col in enumerate(columns):
 
-with col2:
-    st.header("World News")
-    display_feed(col2, feeds["World News"])
-
-with col3:
-    st.header("US News")
-    display_feed(col3, feeds["US News"])
-
-with col4:
-    st.header("Financial News")
-    display_feed(col4, feeds["Finance"])
+    with col:
+        header = feeds.keys()[i]
+        st.header(header)
+        display_feed(col, feeds[header])
 
 # Add more columns/sections as needed
