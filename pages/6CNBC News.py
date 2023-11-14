@@ -62,7 +62,7 @@ def display_feed(column, feed_url, feed_key):
     ax.axis("off")
     ax.set_facecolor('black')  # Set the axis background color
     fig.set_facecolor('black')  # Set the figure background color
-    st.pyplot(plt)
+    st.pyplot(fig)
     # Clear the current figure to ensure it does not interfere with future plots
     plt.clf()
 
