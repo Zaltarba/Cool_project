@@ -19,14 +19,16 @@ st.title("CNBC RSS Feed Reader")
 # Create a multi-column layout
 columns = st.tabs(feeds.keys())
 
+# Initialize session state for each feed
+for feed_key in feeds.keys():
+    if feed_key not in st.session_state:
+        st.session_state[feed_key] = 5  # Initialize with the first five news items
+
+
 # Function to display a single feed
 def display_feed(column, feed_url, feed_key):
 
     feed = feedparser.parse(feed_url)
-    
-    # Check if the feed key is in session state, if not initialize it
-    if feed_key not in st.session_state:
-        st.session_state[feed_key] = 5  # Displaying the first five news item initially
     displayed_items = st.session_state[feed_key]
     column.write(displayed_items)
     # Process text for WordCloud
