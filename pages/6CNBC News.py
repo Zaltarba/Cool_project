@@ -30,7 +30,7 @@ def display_feed(column, feed_url, feed_key):
 
     feed = feedparser.parse(feed_url)
     displayed_items = st.session_state[feed_key]
-    column.write(displayed_items)
+
     # Process text for WordCloud
     text = " "
     for entry in feed.entries[:displayed_items]:
@@ -44,7 +44,7 @@ def display_feed(column, feed_url, feed_key):
             pass
 
     # Create a word cloud object with desired parameters
-    wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(text)            
+    wordcloud = WordCloud(width=400, height=225, background_color='black', colormap='Pastel1').generate(text)            
     # Set up the figure size and layout with a black background
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.imshow(wordcloud, interpolation='bilinear')
