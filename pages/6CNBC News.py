@@ -54,7 +54,7 @@ def display_feed(column, feed_url, feed_key):
         except AttributeError:
             pass
 
-    col1, col2, col3 = st.columns([1, 1, 1])  # Adjust the ratio as needed
+    col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratio as needed
     with col2:
         # Create a word cloud object with desired parameters
         wordcloud = WordCloud(width=1600, height=900, background_color='black', colormap='Pastel1').generate(text)            
