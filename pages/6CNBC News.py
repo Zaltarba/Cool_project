@@ -32,10 +32,7 @@ for feed_key in feeds.keys():
 
 # Callback function to increment news count
 def increment_news_count(key):
-    def increment():
-        st.session_state[key] += 5
-    return increment
-
+    st.session_state[key] += 5
 
 # Function to display a single feed
 def display_feed(column, feed_url, feed_key):
@@ -72,7 +69,7 @@ def display_feed(column, feed_url, feed_key):
         try:
             column.subheader(entry.title)
             try:
-                column.write(entry.summary)
+                column.write(entry.get("summary", ""))
             except AttributeError:
                 pass
             column.markdown(f"[Read More]({entry.link})")
@@ -80,7 +77,7 @@ def display_feed(column, feed_url, feed_key):
             pass
 
     # Button to load more news with a callback function
-    column.button("Show More", key=feed_key, on_click=increment_news_count(feed_key))
+    column.button("Show More", key=feed_key, on_click=lambda: increment_news_count(feed_key))
 
 
 # Displaying feeds in each column
