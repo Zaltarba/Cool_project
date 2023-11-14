@@ -45,7 +45,7 @@ def display_feed(column, feed_url):
 for i, col in enumerate(columns):
 
     with col:
-        header = feeds.keys()[i]
+        header = list(feeds.keys())[i]
         st.header(header)
         display_feed(col, feeds[header])
 
