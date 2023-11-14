@@ -1,5 +1,7 @@
 import streamlit as st
 import feedparser
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 feeds = {
     "Top News": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
@@ -18,6 +20,20 @@ col1, col2, col3, col4 = st.tabs(feeds.keys())
 # Function to display a single feed
 def display_feed(column, feed_url):
     feed = feedparser.parse(feed_url)
+    text = " ".join([entry.title + entry.summary for entry in feed.entries])
+    # Create a word cloud object with desired parameters
+    wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(" ".join(text))
+                
+    # Set up the figure size and layout with a black background
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.imshow(wordcloud, interpolation='bilinear')
+    ax.axis("off")
+    ax.set_facecolor('black')  # Set the axis background color
+    fig.set_facecolor('black')  # Set the figure background color
+    st.pyplot(plt)
+    # Clear the current figure to ensure it does not interfere with future plots
+    plt.clf()
+
     for entry in feed.entries:
         column.subheader(entry.title)
         column.write(entry.summary)
