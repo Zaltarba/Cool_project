@@ -36,7 +36,7 @@ def display_feed(column, feed_url, feed_key):
         except AttributeError:
             pass
         try:
-            text += " " + " ".join(entry.summary)
+            text += " ".join(entry.summary)
         except AttributeError:
             pass
 
