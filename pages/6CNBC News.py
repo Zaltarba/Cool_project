@@ -29,9 +29,10 @@ def display_feed(column, feed_url, feed_key):
         st.session_state[feed_key] = 1  # Displaying the first news item initially
     displayed_items = st.session_state[feed_key]
     # Process text for WordCloud
+    text = ""
     for entry in feed.entries[:displayed_items]:
         try:
-            text = " ".join(entry.title)
+            text += " ".join(entry.title)
         except AttributeError:
             pass
         try:
