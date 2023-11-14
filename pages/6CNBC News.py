@@ -21,13 +21,17 @@ columns = st.tabs(feeds.keys())
 # Function to display a single feed
 def display_feed(column, feed_url):
     feed = feedparser.parse(feed_url)
-    text = " ".join([entry.title for entry in feed.entries])
-    column.write(text)
-    text += " ".join([entry.summary for entry in feed.entries])
-    column.write(text)
+    try:
+        text = " ".join([entry.title for entry in feed.entries])
+    except AttributeError:
+        pass
+    try:
+        text += " ".join([entry.summary for entry in feed.entries])
+    except AttributeError:
+        pass
+
     # Create a word cloud object with desired parameters
-    wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(text)
-                
+    wordcloud = WordCloud(width=800, height=400, background_color='black', colormap='Pastel1').generate(text)            
     # Set up the figure size and layout with a black background
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.imshow(wordcloud, interpolation='bilinear')
