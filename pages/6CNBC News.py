@@ -53,7 +53,7 @@ def display_feed(column, feed_url, feed_key):
             text += entry.summary
         except AttributeError:
             pass
-        
+
     col1, col2, col3 = st.columns([1, 1, 1])  # Adjust the ratio as needed
     with col2:
         # Create a word cloud object with desired parameters
@@ -88,7 +88,7 @@ def display_feed(column, feed_url, feed_key):
 for i, col in enumerate(columns):
     with col:
         header = list(feeds.keys())[i]
-        st.header(header)
+        st.title(header)
         display_feed(col, feeds[header], header)
         # Check if more news is requested
         if st.session_state[f"{header}_more"]:
