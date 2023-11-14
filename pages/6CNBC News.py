@@ -9,6 +9,7 @@ feeds = {
     "US News": "https://www.cnbc.com/id/15837362/device/rss/rss.html",
     "Finance": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
     "Investing":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069",
+    "Financial Advisors":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100646281",
     # Add more feeds as needed
 }
 
