@@ -10,6 +10,11 @@ feeds = {
     "Finance": "https://www.cnbc.com/id/10000664/device/rss/rss.html",
     "Investing":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069",
     "Financial Advisors":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100646281",
+    "Market Insider":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20409666", 
+    "Earnings":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839135",
+    "Autos":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000101", 
+    "Real Estate":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000115",
+    "Energy":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19836768",
     # Add more feeds as needed
 }
 
