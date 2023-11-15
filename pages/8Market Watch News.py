@@ -21,9 +21,6 @@ st.set_page_config(
 )
 st.sidebar.success("Select a feature above.")
 
-# Create a multi-column layout
-columns = st.tabs(feeds.keys())
-
 # Initialize session state for each feed
 for feed_key in feeds.keys():
     if feed_key not in st.session_state:
@@ -61,6 +58,8 @@ def display_banner():
 
 display_banner()
 st.title("MarketWatch News")
+# Create a multi-column layout
+columns = st.tabs(feeds.keys())
 
 # Callback function to increment news count
 def increment_news_count(key):
