@@ -34,6 +34,9 @@ for feed_key in feeds.keys():
 
 def display_banner():
     feed = feedparser.parse(headlines_url)
+
+    headline_str = ' - '.join(f'&#128200; {entry.title}' for entry in feed.entries)
+
     text_html = """
     <div style="
         width: 100%; 
@@ -44,14 +47,7 @@ def display_banner():
             display: inline-block;
             padding-left: 100%;
             animation: ticker 30s linear infinite;">
-            """
-    for entry in feed.entries:
-        try:
-            text_html += """&#128200;""" + entry.title + """ - """
-        except AttributeError:
-            pass
-    # HTML and CSS for the moving text
-    ticker_html += """
+            {headline_str}
         </div>
     </div>
 
@@ -63,7 +59,7 @@ def display_banner():
     </style>
     """
     # Display the ticker
-    st.markdown(ticker_html, unsafe_allow_html=True)
+    st.markdown(text_html, unsafe_allow_html=True)
 
 display_banner()
 
