@@ -5,12 +5,13 @@ from wordcloud import WordCloud
 
 feeds = {
     "Top Stories":"http://feeds.marketwatch.com/marketwatch/topstories/",
-    "Headlines":"http://feeds.marketwatch.com/marketwatch/realtimeheadlines/", 
     "Market Pulse":"http://feeds.marketwatch.com/marketwatch/marketpulse/",
     "Stock to Watch":"http://feeds.marketwatch.com/marketwatch/stocktowatch/",
     "Automobile":"http://feeds.marketwatch.com/marketwatch/Autoreviews/",
     # Add more feeds as needed
 }
+
+headlines_url = "http://feeds.marketwatch.com/marketwatch/realtimeheadlines/"
 
 # Streamlit layout
 st.set_page_config(
@@ -30,6 +31,41 @@ for feed_key in feeds.keys():
         st.session_state[feed_key] = 5  # Initialize with the first five news items
     if f"{feed_key}_more" not in st.session_state:
         st.session_state[f"{feed_key}_more"] = False  # Flag for more news
+
+def display_banner():
+    feed = feedparser.parse(headlines_url)
+    text_html = """
+    <div style="
+        width: 100%; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        box-sizing: border-box;">
+        <div style="
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 30s linear infinite;">
+            """
+    for entry in feed.entries:
+        try:
+            text_html += """&#128200;""" + entry.title + """ - """
+        except AttributeError:
+            pass
+    # HTML and CSS for the moving text
+    ticker_html += """
+        </div>
+    </div>
+
+    <style>
+    @keyframes ticker {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+    </style>
+    """
+    # Display the ticker
+    st.markdown(ticker_html, unsafe_allow_html=True)
+
+display_banner()
 
 # Callback function to increment news count
 def increment_news_count(key):
