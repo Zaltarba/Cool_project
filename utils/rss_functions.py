@@ -2,6 +2,7 @@ import feedparser
 import streamlit as st 
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+from textblob import TextBlob
 
 def display_banner(headlines_url):
     feed = feedparser.parse(headlines_url)
@@ -73,6 +74,9 @@ def display_feed(column, feed_url, feed_key):
     for entry in feed.entries[:displayed_items]:
         try:
             column.subheader(entry.title)
+            sentiment = TextBlob(entry.title).sentiment.polarity
+            sentiment = "Positive" if sentiment > 0 else "Negative" if sentiment < 0 else "Neutral"
+            st.write(f"Sentiment: {sentiment}")
             try:
                 column.write(entry.get("summary", ""))
             except AttributeError:
