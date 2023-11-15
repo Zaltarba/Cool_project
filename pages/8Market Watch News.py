@@ -28,35 +28,7 @@ for feed_key in feeds.keys():
     if f"{feed_key}_more" not in st.session_state:
         st.session_state[f"{feed_key}_more"] = False  # Flag for more news
 
-def display_banner():
-    feed = feedparser.parse(headlines_url)
-
-    headline_str = ' - '.join(f'&#128200; {entry.title}' for entry in feed.entries)
-
-    text_html = f"""
-    <div style="
-        width: 100%; 
-        white-space: nowrap; 
-        overflow: hidden; 
-        box-sizing: border-box;">
-        <div style="
-            display: inline-block;
-            padding-left: 100%;
-            animation: ticker 30s linear infinite;">
-            {headline_str}"""+"""
-        </div>
-    </div>
-    <style>
-    @keyframes ticker {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-100%); }
-    }
-    </style>
-    """
-    # Display the ticker
-    st.markdown(text_html, unsafe_allow_html=True)
-
-display_banner()
+display_banner(headlines_url)
 st.title("MarketWatch News")
 # Create a multi-column layout
 columns = st.tabs(feeds.keys())
