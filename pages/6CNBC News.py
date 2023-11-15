@@ -47,34 +47,36 @@ def increment_news_count(key):
 # Function to display a single feed
 def display_feed(column, feed_url, feed_key):
 
-    feed = feedparser.parse(feed_url)
-    displayed_items = st.session_state[feed_key]
+    with st.spinner('Loading news feed...'):
+        feed = feedparser.parse(feed_url)
+        displayed_items = st.session_state[feed_key]
 
-    # Process text for WordCloud
-    text = "test "
-    for entry in feed.entries[:displayed_items]:
-        try:
-            text += entry.title
-        except AttributeError:
-            pass
-        try:
-            text += entry.summary
-        except AttributeError:
-            pass
+        # Process text for WordCloud
+        text = "test "
+        for entry in feed.entries[:displayed_items]:
+            try:
+                text += entry.title
+            except AttributeError:
+                pass
+            try:
+                text += entry.summary
+            except AttributeError:
+                pass
 
-    col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratio as needed
-    with col2:
-        # Create a word cloud object with desired parameters
-        wordcloud = WordCloud(width=1600, height=900, background_color='black', colormap='Pastel1').generate(text)            
-        # Set up the figure size and layout with a black background
-        fig, ax = plt.subplots(figsize=(4, 2.25))
-        ax.imshow(wordcloud, interpolation='bilinear')
-        ax.axis("off")
-        ax.set_facecolor('black')  # Set the axis background color
-        fig.set_facecolor('black')  # Set the figure background color
-        st.pyplot(fig)
-        # Clear the current figure to ensure it does not interfere with future plots
-        plt.clf()
+        col1, col2, col3 = st.columns([1, 2, 1])  # Adjust the ratio as needed
+        with col2:
+            with st.spinner('Generating word cloud...'):
+                # Create a word cloud object with desired parameters
+                wordcloud = WordCloud(width=1600, height=900, background_color='black', colormap='Pastel1').generate(text)            
+                # Set up the figure size and layout with a black background
+                fig, ax = plt.subplots(figsize=(4, 2.25))
+                ax.imshow(wordcloud, interpolation='bilinear')
+                ax.axis("off")
+                ax.set_facecolor('black')  # Set the axis background color
+                fig.set_facecolor('black')  # Set the figure background color
+                st.pyplot(fig)
+                # Clear the current figure to ensure it does not interfere with future plots
+                plt.clf()
 
     # Display the limited number of feed entries
     for entry in feed.entries[:displayed_items]:
