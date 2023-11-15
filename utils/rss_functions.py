@@ -80,7 +80,9 @@ def display_feed(column, feed_url, feed_key):
             column.markdown(f"[Read More]({entry.link})")
         except AttributeError:
             pass
-
-    # Button to request more news
-    if column.button("Show More", key=f"{feed_key}_btn"):
-        st.session_state[f"{feed_key}_more"] = True
+    
+    _, col4, _ = st.columns([1, 2, 1])  # Adjust the ratio as needed
+    with col4:
+        # Button to request more news
+        if column.button("Show More", key=f"{feed_key}_btn"):
+            st.session_state[f"{feed_key}_more"] = True
