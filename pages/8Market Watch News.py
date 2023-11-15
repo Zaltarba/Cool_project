@@ -15,12 +15,11 @@ headlines_url = "http://feeds.marketwatch.com/marketwatch/realtimeheadlines/"
 
 # Streamlit layout
 st.set_page_config(
-	page_title="New Yorks Times News",
+	page_title="Market Watch News",
 	layout="wide",
 	page_icon="📬",
 )
 st.sidebar.success("Select a feature above.")
-st.title("New Yorks Times News")
 
 # Create a multi-column layout
 columns = st.tabs(feeds.keys())
@@ -62,6 +61,7 @@ def display_banner():
     st.markdown(text_html, unsafe_allow_html=True)
 
 display_banner()
+st.title("MarketWatch News")
 
 # Callback function to increment news count
 def increment_news_count(key):
