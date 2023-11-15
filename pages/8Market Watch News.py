@@ -36,7 +36,7 @@ def display_banner():
 
     headline_str = ' - '.join(f'&#128200; {entry.title}' for entry in feed.entries)
 
-    text_html = """
+    text_html = f"""
     <div style="
         width: 100%; 
         white-space: nowrap; 
@@ -46,10 +46,9 @@ def display_banner():
             display: inline-block;
             padding-left: 100%;
             animation: ticker 30s linear infinite;">
-            {headline_str}
+            {headline_str}"""+"""
         </div>
     </div>
-
     <style>
     @keyframes ticker {
         0% { transform: translateX(0); }
