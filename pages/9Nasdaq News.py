@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
 feeds = {
-    "Nasdaq original content":"https://www.nasdaq.com/feed/nasdaq-original/rss.xml",
+    #"Nasdaq original content":"https://www.nasdaq.com/feed/nasdaq-original/rss.xml",
     "Commodities":"https://www.nasdaq.com/feed/rssoutbound?category=Commodities",
     "Crypto":"https://www.nasdaq.com/feed/rssoutbound?category=Cryptocurrencies", 
     "Dividends":"https://www.nasdaq.com/feed/rssoutbound?category=Dividends",
