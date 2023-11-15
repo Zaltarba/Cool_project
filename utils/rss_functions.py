@@ -75,8 +75,20 @@ def display_feed(column, feed_url, feed_key):
         try:
             column.subheader(entry.title)
             sentiment = TextBlob(entry.title).sentiment.polarity
-            sentiment = "Positive" if sentiment > 0 else "Negative" if sentiment < 0 else "Neutral"
-            st.write(f"Sentiment: {sentiment}")
+
+            if sentiment > 0:
+                sentiment_color = 'green'
+                sentiment_text = 'Positive'
+            elif sentiment < 0:
+                sentiment_color = 'red'
+                sentiment_text = 'Negative'
+            else:
+                sentiment_color = 'blue'
+                sentiment_text = 'Neutral'
+
+            # Use markdown with HTML to display colored sentiment
+            st.markdown(f'<p style="color:{sentiment_color};">Sentiment: {sentiment_text}</p>', unsafe_allow_html=True)
+
             try:
                 column.write(entry.get("summary", ""))
             except AttributeError:
