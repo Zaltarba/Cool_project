@@ -8,12 +8,12 @@ feeds = {
 
 # Streamlit layout
 st.set_page_config(
-	page_title="Nasdaq News",
+	page_title="Les Echos News",
 	layout="wide",
 	page_icon="📬",
 )
 st.sidebar.success("Select a feature above.")
-st.title("Nasdaq News")
+st.title("Les Echos News")
 
 # Create a multi-column layout
 columns = st.tabs(feeds.keys())
