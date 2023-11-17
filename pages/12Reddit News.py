@@ -16,7 +16,6 @@ sentiment_analyzer = pipeline("sentiment-analysis")
 
 # Streamlit Interface
 st.title("Reddit Sentiment Analysis")
-
 default_subreddits = ['stocks', 'investing', 'StockMarket', 'wallstreetbets']
 selected_subreddits = st.multiselect('Choose subreddits for analysis:', default_subreddits, default=default_subreddits)
 
