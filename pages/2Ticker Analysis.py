@@ -69,7 +69,7 @@ def display_ticker_data(ticker_symbol):
 if run_fundamental_analysis:
     display_ticker_data(ticker)
 
-from util.reddit_api_key import *
+from utils.reddit_api_key import *
 
 # Initialize Reddit connection
 reddit = praw.Reddit(client_id=reddit_client_id,
