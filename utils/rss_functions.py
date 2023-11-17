@@ -3,6 +3,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from textblob import TextBlob
+from transformers import pipeline
 
 def display_banner(headlines_url):
     feed = feedparser.parse(headlines_url)
@@ -35,6 +36,9 @@ def display_banner(headlines_url):
 # Callback function to increment news count
 def increment_news_count(key):
     st.session_state[key] += 5
+
+# Initialize sentiment analysis model
+sentiment_analyzer = pipeline("sentiment-analysis")
 
 # Function to display a single feed
 def display_feed(column, feed_url, feed_key):
@@ -74,20 +78,17 @@ def display_feed(column, feed_url, feed_key):
     for entry in feed.entries[:displayed_items]:
         try:
             column.subheader(entry.title)
-            sentiment = TextBlob(entry.title).sentiment.polarity
+            title_result = sentiment_analyzer(entry.title)[0]
+            summary_result = sentiment_analyzer(entry.get("summary", ""))[0]
 
-            if sentiment > 0:
-                sentiment_color = 'green'
-                sentiment_text = 'Positive'
-            elif sentiment < 0:
-                sentiment_color = 'red'
-                sentiment_text = 'Negative'
-            else:
-                sentiment_color = 'blue'
-                sentiment_text = 'Neutral'
+            title_sentiment = title_result['label']
+            title_confidence = title_result['score']
+            summary_sentiment = summary_result['label']
+            summary_confidence = summary_result['score']
 
-            # Use markdown with HTML to display colored sentiment
-            st.markdown(f'<p style="color:{sentiment_color};">Sentiment: {sentiment_text}</p>', unsafe_allow_html=True)
+            # Display sentiment for title and summary
+            column.markdown(f"<p style='color:green;'>Title Sentiment: {title_sentiment} ({title_confidence:.2f})</p>", unsafe_allow_html=True)
+            column.markdown(f"<p style='color:blue;'>Summary Sentiment: {summary_sentiment} ({summary_confidence:.2f})</p>", unsafe_allow_html=True)
 
             try:
                 column.write(entry.get("summary", ""))
