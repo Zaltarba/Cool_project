@@ -15,3 +15,5 @@ wordcloud
 praw
 textblob
 feedparser
+transformers
+torch
