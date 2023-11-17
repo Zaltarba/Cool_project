@@ -69,11 +69,7 @@ def display_ticker_data(ticker_symbol):
 if run_fundamental_analysis:
     display_ticker_data(ticker)
 
-# Reddit API credentials
-reddit_client_id = 'tTKTJ5YX5qM2ej16P4Oofg'
-reddit_client_secret = '9_iF4UzlsCZdcvQETlpbmf62-Ovd4w'
-reddit_user_agent = 'streamlit.com.gamma.myredditapp:v1.2.3 (by /u/daniel98smith)'
-
+from util.reddit_api_key import *
 
 # Initialize Reddit connection
 reddit = praw.Reddit(client_id=reddit_client_id,
