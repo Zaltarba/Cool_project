@@ -20,40 +20,39 @@ st.title("Reddit Sentiment Analysis")
 default_subreddits = ['stocks', 'investing', 'StockMarket', 'wallstreetbets']
 selected_subreddits = st.multiselect('Choose subreddits for analysis:', default_subreddits, default=default_subreddits)
 
-ticker = st.text_input('Enter a stock ticker for analysis:', 'AAPL')
-
-def get_reddit_posts(subreddits, ticker_symbol):
+def get_reddit_posts(subreddits):
     news_posts = []
     for subreddit_name in subreddits:
         subreddit = reddit.subreddit(subreddit_name)
-        for post in subreddit.search(ticker_symbol, limit=10, sort='hot'):
+        for post in subreddit.hot(limit=10):
             news_posts.append(post)
     return news_posts
 
 run_reddit_analysis = st.button('Run Reddit Analysis')
 
 if run_reddit_analysis:
-    st.write("## Reddit Posts Analysis")
+    st.write("## Reddit Posts Sentiment Analysis")
     try:
-        posts = get_reddit_posts(selected_subreddits, ticker)
+        posts = get_reddit_posts(selected_subreddits)
         sentiments = []
+        confidences = []
+
         for post in posts:
-            analysis = sentiment_analyzer(post.title)
-            sentiment = analysis[0]['label']
-            sentiments.append(sentiment)
-            st.write(f"{post.title} - Sentiment: {sentiment}")
+            analysis = sentiment_analyzer(post.title)[0]
+            sentiment_score = 1 if analysis['label'] == 'POSITIVE' else -1
+            confidence = analysis['score']
 
-        # Count sentiment occurrences
-        sentiment_count = Counter(sentiments)
+            sentiments.append(sentiment_score)
+            confidences.append(confidence)
 
-        # Plotting
+            st.write(f"{post.title} - Sentiment: {'Positive' if sentiment_score > 0 else 'Negative'}, Confidence: {confidence:.2f}")
+
+        # Scatter Plot
         fig, ax = plt.subplots()
-        ax.bar(sentiment_count.keys(), sentiment_count.values())
-        ax.set_title("Sentiment Distribution")
-        ax.set_xlabel("Sentiment")
-        ax.set_ylabel("Count")
+        ax.scatter(sentiments, confidences, c=sentiments, cmap='RdYlGn', alpha=0.7)
+        ax.set_title("Sentiment Score vs Confidence")
+        ax.set_xlabel("Sentiment Score (1=Positive, -1=Negative)")
+        ax.set_ylabel("Confidence")
         st.pyplot(fig)
     except Exception as e:
         st.error(f"Error fetching Reddit posts: {e}")
-
-# Optional: Add more functionality like word cloud or detailed analysis per post
