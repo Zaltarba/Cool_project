@@ -55,14 +55,11 @@ fig = px.bar(df, x='Source', y='Number of Articles', color='Category',
 # Display the plot in Streamlit
 st.plotly_chart(fig)
 
-import nltk
-from nltk.corpus import stopwords
-nltk.download('stopwords')
-english_stop_words = set(stopwords.words('english'))
+from utils.stopwords import english_stop_words
 
 def generate_wordcloud(source_articles):
     text = " ".join(article['title'] for article in source_articles)
-    wordcloud = WordCloud(width = 800, height = 400, background_color ='black', stopwords = english_stop_words ).generate(text)
+    wordcloud = WordCloud(width = 800, height = 400, background_color ='black', stopwords = english_stop_words).generate(text)
     plt.figure(figsize = (8, 4), facecolor = None) 
     plt.imshow(wordcloud) 
     plt.axis("off") 
