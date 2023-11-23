@@ -9,6 +9,7 @@ class DataProvider(Enum):
     NYT = "New York Times"
     COINTELEGRAPH = "Coin Telegraph"
     BLOCKCHAINNEWS = "Blockchain News"
+    SEEKINGALPHA = "Seeking Alpha"
 
 feeds = {
     DataProvider.CNBC:{
@@ -57,7 +58,22 @@ feeds = {
         "Bitcoin":"https://blockchain.news/RSS?key=0HM0B8QFN3GEO",
         "Analysis":"https://Blockchain.News/RSS?key=0HM9E1QNN797D",
         "Interviews":"https://blockchain.news/RSS?key=0HLM7O77P8TQ9",
-    }
+    }, 
+    DataProvider.SEEKINGALPHA: {
+        "Apple":"https://seekingalpha.com/api/sa/combined/AAPL.xml",
+        "Tesla":"https://seekingalpha.com/api/sa/combined/TSLA.xml", 
+        "General Electric Compagny":"https://seekingalpha.com/api/sa/combined/GE.xml",
+        "Latest Analysis":"https://seekingalpha.com/feed.xml", 
+        "Currencies":"https://seekingalpha.com/tag/forex.xml", 
+        "Financials":"https://seekingalpha.com/sector/financial.xml", 
+        "IPO Analysis":"https://seekingalpha.com/tag/ipo-analysis.xml", 
+        "Long Ideas":"https://seekingalpha.com/tag/long-ideas.xml", 
+        "ETFs":"https://seekingalpha.com/tag/etf-portfolio-strategy.xml", 
+        "Healthcare":"https://seekingalpha.com/sector/healthcare.xml",
+        "Utilities":"https://seekingalpha.com/sector/utilities.xml", 
+        "Most Popular":"https://seekingalpha.com/listing/most-popular-articles.xml", 
+
+    },
 }
 
 def clean_html(raw_html):
@@ -140,6 +156,11 @@ class BlockChainNewsFeedParser(BaseFeedParser):
     available_fields = BaseFeedParser.available_fields.copy()
     # Additional New York Times-specific methods or overrides
 
+class SeekingAlphaFeedParser(BaseFeedParser):
+    source = DataProvider.COINTELEGRAPH
+    available_fields = BaseFeedParser.available_fields.copy()
+    # Additional New York Times-specific methods or overrides
+
 class FeedManager:
     def __init__(self, feeds):
         self.feeds = feeds
@@ -149,6 +170,7 @@ class FeedManager:
             DataProvider.NYT: NewYorkTimesFeedParser,
             DataProvider.COINTELEGRAPH: CoinTelegraphFeedParser, 
             DataProvider.BLOCKCHAINNEWS: BlockChainNewsFeedParser, 
+            DataProvider.SEEKINGALPHA: SeekingAlphaFeedParser,
         }
 
     def fetch_all_feeds(self):
