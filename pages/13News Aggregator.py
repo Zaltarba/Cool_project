@@ -39,5 +39,5 @@ for source, categories in all_feeds.items():
                 with col2:
                     st.markdown(f"**[{article['title']}]({article['link']})**")
                     st.caption(f"{article['date']}")
-                    st.write(article.get('summary', 'No summary available'))
+                    st.write(article.get('summary', 'No summary available')[:200])
                 st.markdown("---")  # Horizontal line as a separator
