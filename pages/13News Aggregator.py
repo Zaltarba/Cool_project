@@ -18,7 +18,9 @@ def is_after_min_date(article_date, min_date):
     return article_date >= min_date
 
 # Displaying the feeds
+st.write("test")
 for source, categories in all_feeds.items():
+    st.write("test")
     if source in selected_sources:
         st.write(f"Source: {source}")
         for category, articles in categories.items():
