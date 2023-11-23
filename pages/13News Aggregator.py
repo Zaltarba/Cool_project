@@ -3,6 +3,8 @@ import datetime as datetime
 from utils.rss_functions import *
 from utils.RSS_architecture import *
 import pandas as pd 
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Assuming DataProvider is an Enum with your sources
 source_options = [source.value for source in DataProvider]
@@ -23,8 +25,6 @@ icons_path = {
     "New York Times": "pics/NYT_icon.jpg",
     # Add more as needed
 }
-
-import matplotlib.pyplot as plt
 
 # Count the number of articles per category per data provider
 article_counts = {source.value: {category: len(articles) for category, articles in categories.items()} for source, categories in all_feeds.items()}
