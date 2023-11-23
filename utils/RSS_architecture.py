@@ -7,7 +7,7 @@ class DataProvider(Enum):
     CNBC = "CNBC"
     MARKETWATCH = "MarketWatch"
     NYT = "New York Times"
-    COINBASE = "Coinbase"
+    COINTELEGRAPH = "Cointelegraph"
 
 feeds = {
     DataProvider.CNBC:{
@@ -43,7 +43,7 @@ feeds = {
         "Most Shared":"https://rss.nytimes.com/services/xml/rss/nyt/MostShared.xml", 
         "Most Viewed":"https://rss.nytimes.com/services/xml/rss/nyt/MostViewed.xml", 
         },
-    DataProvider.COINBASE:{
+    DataProvider.COINTELEGRAPH:{
         "Altcoin":"https://cointelegraph.com/rss/tag/altcoin",
         "Bitcoin": "https://cointelegraph.com/rss/tag/bitcoin", 
         "Blockchain":"https://cointelegraph.com/rss/tag/blockchain",
