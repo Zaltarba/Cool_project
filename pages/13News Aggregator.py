@@ -18,16 +18,16 @@ def is_after_min_date(article_date, min_date):
     return pd.to_datetime(article_date, utc=True) >= pd.to_datetime(min_date, utc=True)
 
 icons_path = {
-    "CNBC": "pics/temp.jpg",
-    "MarketWatch": "pics/temp.jpg",
-    "New York Times": "pics/temp.jpg",
+    "CNBC": "pics/CNBC_icon.jpg",
+    "MarketWatch": "pics/MW_icon.jpg",
+    "New York Times": "pics/NYT_icon.jpg",
     # Add more as needed
 }
 
 # Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
     if source.value in selected_sources:
-        st.header(f"Source: {source}")
+        st.header(f"Source: {source.value}")
         for category, articles in categories.items():
             st.subheader(f"Category: {category}")
             for article in articles:
@@ -35,7 +35,7 @@ for source, categories in all_feeds.items():
                 if is_after_min_date(article_date, min_date):
                     col1, col2 = st.columns([1, 3])
                     with col1:
-                        st.image("pics/temp.jpg")  # Optional: source/category icon
+                        st.image(icons_path[source.value])  # Optional: source/category icon
                         st.caption(article_date)
                     with col2:
                         st.markdown(f"##### [{article['title']}]({article['link']})")
