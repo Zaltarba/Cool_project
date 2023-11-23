@@ -23,7 +23,7 @@ def is_after_min_date(article_date, min_date):
 icons_path = {
     "CNBC": "pics/CNBC_icon.png",
     "MarketWatch": "pics/MW_icon.jpg",
-    "New York Times": "pics/NYT_icon.jpg",
+    "New York Times": "pics/NYT_icon.png",
     # Add more as needed
 }
 
