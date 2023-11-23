@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 
+
 st.set_page_config(
 	page_title="RSS News Aggregator",
 	layout="wide",
