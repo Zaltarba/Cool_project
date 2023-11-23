@@ -87,6 +87,7 @@ icons_path = {
     "Coin Telegraph":"pics/COINTELEGRAPH_icon.jpg",
     "Blockchain News":"pics/BLOCKCHAINNEWS_icon.jpg",
     "Seeking Alpha":"pics/SEEKINGALPHA_icon.png", 
+    "US Securities Exchange Commision":"pics/SEC_icon.png",
     # Add more as needed
 }
 
