@@ -7,7 +7,7 @@ class DataProvider(Enum):
     CNBC = "CNBC"
     MARKETWATCH = "MarketWatch"
     NYT = "New York Times"
-    COINTELEGRAPH = "Cointelegraph"
+    COINTELEGRAPH = "Coin Telegraph"
 
 feeds = {
     DataProvider.CNBC:{
