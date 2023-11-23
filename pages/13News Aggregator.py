@@ -25,6 +25,7 @@ icons_path = {
     "MarketWatch": "pics/MW_icon.jpg",
     "New York Times": "pics/NYT_icon.png",
     "Coin Telegraph":"pics/COINTELEGRAPH_icon.jpg",
+    "Blockchain News":"pics/BLOCKCHAINNEWS_icon.jpg",
     # Add more as needed
 }
 
