@@ -76,6 +76,16 @@ feeds = {
     },
 }
 
+icons_path = {
+    "CNBC": "pics/CNBC_icon.png",
+    "MarketWatch": "pics/MW_icon.jpg",
+    "New York Times": "pics/NYT_icon.png",
+    "Coin Telegraph":"pics/COINTELEGRAPH_icon.jpg",
+    "Blockchain News":"pics/BLOCKCHAINNEWS_icon.jpg",
+    "Seeking Alpha":"pics/SEEKINGALPHA_icon.png", 
+    # Add more as needed
+}
+
 def clean_html(raw_html):
     """
     This function removes HTML tags and decodes HTML entities.
