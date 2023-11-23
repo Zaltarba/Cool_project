@@ -8,6 +8,7 @@ class DataProvider(Enum):
     MARKETWATCH = "MarketWatch"
     NYT = "New York Times"
     COINTELEGRAPH = "Coin Telegraph"
+    BLOCKCHAINNEWS = "Blockchain News"
 
 feeds = {
     DataProvider.CNBC:{
@@ -52,6 +53,11 @@ feeds = {
         "Monero":"https://cointelegraph.com/rss/tag/monero",
         "Regulation":"https://cointelegraph.com/rss/tag/regulation", 
     },
+    DataProvider.BLOCKCHAINNEWS: {
+        "Bitcoin":"https://blockchain.news/RSS?key=0HM0B8QFN3GEO",
+        "Analysis":"https://Blockchain.News/RSS?key=0HM9E1QNN797D",
+        "Interviews":"https://blockchain.news/RSS?key=0HLM7O77P8TQ9",
+    }
 }
 
 def clean_html(raw_html):
@@ -129,6 +135,11 @@ class CoinTelegraphFeedParser(BaseFeedParser):
     available_fields = BaseFeedParser.available_fields.copy()
     # Additional New York Times-specific methods or overrides
 
+class BlockChainNewsFeedParser(BaseFeedParser):
+    source = DataProvider.COINTELEGRAPH
+    available_fields = BaseFeedParser.available_fields.copy()
+    # Additional New York Times-specific methods or overrides
+
 class FeedManager:
     def __init__(self, feeds):
         self.feeds = feeds
@@ -137,6 +148,7 @@ class FeedManager:
             DataProvider.MARKETWATCH: MarketWatchFeedParser,
             DataProvider.NYT: NewYorkTimesFeedParser,
             DataProvider.COINTELEGRAPH: CoinTelegraphFeedParser, 
+            DataProvider.BLOCKCHAINNEWS: BlockChainNewsFeedParser, 
         }
 
     def fetch_all_feeds(self):
