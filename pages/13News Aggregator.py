@@ -68,8 +68,8 @@ for source, categories in all_feeds.items():
                             col1, col2 = st.columns([1, 4])
                             with col1:
                                 st.image(icons_path[source.value]) # Optional: source/category icon
-                        with col2:
-                            st.markdown(f"**[{article['title']}]({article['link']})**")
-                            st.caption(f"{article['date']}")
-                            st.write(article.get('summary', 'No summary available')[:200])
-                        st.markdown("---")  # Horizontal line as a separator
+                            with col2:
+                                st.markdown(f"**[{article['title']}]({article['link']})**")
+                                st.caption(f"{article['date']}")
+                                st.write(article.get('summary', 'No summary available')[:200])
+                            st.markdown("---")  # Horizontal line as a separator
