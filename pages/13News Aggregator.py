@@ -7,6 +7,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 
+st.set_page_config(
+	page_title="RSS News Aggregator",
+	layout="wide",
+	page_icon="📳",
+)
+st.sidebar.success("Select a feature above.")
+st.title("RSS News Aggregator 📳")	
+
 # Assuming DataProvider is an Enum with your sources
 source_options = [source.value for source in DataProvider]
 selected_sources = st.multiselect('Select Data Sources:', source_options, default=source_options)
