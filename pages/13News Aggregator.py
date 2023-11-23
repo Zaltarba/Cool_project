@@ -35,7 +35,7 @@ for source, categories in all_feeds.items():
                 if is_after_min_date(article_date, min_date):
                     col1, col2 = st.columns([1, 4])
                     with col1:
-                        st.image(icons_path[source.value], width=40) # Optional: source/category icon
+                        st.image(icons_path[source.value]) # Optional: source/category icon
                 with col2:
                     st.markdown(f"**[{article['title']}]({article['link']})**")
                     st.caption(f"{article['date']}")
