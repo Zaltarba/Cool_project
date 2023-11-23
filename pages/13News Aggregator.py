@@ -8,7 +8,6 @@ import pandas as pd
 source_options = [source.value for source in DataProvider]
 selected_sources = st.multiselect('Select Data Sources:', source_options, default=source_options)
 selected_feeds = [source for source in DataProvider if source.value in selected_sources]
-
 min_date = st.date_input("Select minimal publication date:")
 
 feed_manager = FeedManager({feed:feeds[feed] for feed in feeds.keys()})
@@ -17,6 +16,13 @@ all_feeds = feed_manager.fetch_all_feeds()
 # Function to check if an article's date is after the selected minimum date
 def is_after_min_date(article_date, min_date):
     return pd.to_datetime(article_date, utc=True) >= pd.to_datetime(min_date, utc=True)
+
+icons_path = {
+    "CNBC": "pics/temp.jpg",
+    "MarketWatch": "pics/temp.jpg",
+    "New York Times": "pics/temp.jpg",
+    # Add more as needed
+}
 
 # Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
@@ -29,7 +35,7 @@ for source, categories in all_feeds.items():
                 if is_after_min_date(article_date, min_date):
                     col1, col2 = st.columns([1, 3])
                     with col1:
-                        st.image("icon_placeholder.png")  # Optional: source/category icon
+                        st.image("pics/temp.jpg")  # Optional: source/category icon
                         st.caption(article_date.strftime("%B %d, %Y"))
                     with col2:
                         st.markdown(f"##### [{article['title']}]({article['link']})")
