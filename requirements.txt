@@ -17,3 +17,4 @@ textblob
 feedparser
 transformers
 torch
+nltk
