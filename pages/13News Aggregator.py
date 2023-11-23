@@ -29,16 +29,6 @@ all_feeds = feed_manager.fetch_all_feeds()
 def is_after_min_date(article_date, min_date):
     return pd.to_datetime(article_date, utc=True) >= pd.to_datetime(min_date, utc=True)
 
-icons_path = {
-    "CNBC": "pics/CNBC_icon.png",
-    "MarketWatch": "pics/MW_icon.jpg",
-    "New York Times": "pics/NYT_icon.png",
-    "Coin Telegraph":"pics/COINTELEGRAPH_icon.jpg",
-    "Blockchain News":"pics/BLOCKCHAINNEWS_icon.jpg",
-    "Seeking Alpha":"pics/SEEKINGALPHA_icon.png", 
-    # Add more as needed
-}
-
 # Aggregate the data with the date filter
 counts = {}
 for source, categories in all_feeds.items():
@@ -87,8 +77,11 @@ with st.expander("View Word Clouds"):
         with tab:
             # Assuming that the 'fetch_all_feeds' function or similar has been called 
             # and 'all_feeds' is populated with the articles data
-            source_articles = [article for categories in all_feeds[source].values() for article in categories]
-            generate_wordcloud(source_articles)
+            source_articles = [article for categories in all_feeds[source].values() for article in categories if is_after_min_date(article["date"], min_date)]
+            if len(source_articles)>0:
+                generate_wordcloud(source_articles)
+            else:
+                st.write("No recent article")
 
 # Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
