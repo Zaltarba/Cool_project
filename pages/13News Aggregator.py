@@ -18,14 +18,20 @@ all_feeds = feed_manager.fetch_all_feeds()
 def is_after_min_date(article_date, min_date):
     return pd.to_datetime(article_date, utc=True) >= pd.to_datetime(min_date, utc=True)
 
+# Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
     if source.value in selected_sources:
+        st.header(f"Source: {source}")
         for category, articles in categories.items():
-            with st.expander(f"Category: {category}", expanded=False):
-                for article in articles:
-                    article_date = article['date'] # Adjust the format as per your date format
-                    if is_after_min_date(article_date, min_date):
-                        st.markdown(f"**Title:** {article['title']}\n"
-                                    f"**Date:** {article_date}\n"
-                                    f"**Summary:** {article.get('summary', 'No summary available')}\n"
-                                    f"[Read more]({article['link']})")
+            st.subheader(f"Category: {category}")
+            for article in articles:
+                article_date = article['date']  # Adjust the format as per your date format
+                if is_after_min_date(article_date, min_date):
+                    col1, col2 = st.columns([1, 3])
+                    with col1:
+                        st.image("icon_placeholder.png")  # Optional: source/category icon
+                        st.caption(article_date.strftime("%B %d, %Y"))
+                    with col2:
+                        st.markdown(f"##### [{article['title']}]({article['link']})")
+                        st.write(article.get('summary', 'No summary available'))
+                    st.markdown("---")  
