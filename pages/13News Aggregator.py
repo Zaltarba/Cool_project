@@ -20,13 +20,12 @@ def is_after_min_date(article_date, min_date):
 
 for source, categories in all_feeds.items():
     if source.value in selected_sources:
-        with st.expander(f"Source: {source}"):
-            for category, articles in categories.items():
-                with st.expander(f"Category: {category}", expanded=False):
-                    for article in articles:
-                        article_date = article['date'] # Adjust the format as per your date format
-                        if is_after_min_date(article_date, min_date):
-                            st.markdown(f"**Title:** {article['title']}\n"
-                                        f"**Date:** {article_date}\n"
-                                        f"**Summary:** {article.get('summary', 'No summary available')}\n"
-                                        f"[Read more]({article['link']})")
+        for category, articles in categories.items():
+            with st.expander(f"Category: {category}", expanded=False):
+                for article in articles:
+                    article_date = article['date'] # Adjust the format as per your date format
+                    if is_after_min_date(article_date, min_date):
+                        st.markdown(f"**Title:** {article['title']}\n"
+                                    f"**Date:** {article_date}\n"
+                                    f"**Summary:** {article.get('summary', 'No summary available')}\n"
+                                    f"[Read more]({article['link']})")
