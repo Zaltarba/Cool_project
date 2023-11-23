@@ -6,7 +6,7 @@ from utils.RSS_architecture import *
 # Assuming DataProvider is an Enum with your sources
 source_options = [source.value for source in DataProvider]
 selected_sources = st.multiselect('Select Data Sources:', source_options, default=source_options)
-selected_feeds = [source for source in selected_sources if source.value in selected_sources]
+selected_feeds = [source for source in DataProvider if source.value in selected_sources]
 
 min_date = st.date_input("Select minimal publication date:")
 
