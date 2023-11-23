@@ -5,7 +5,7 @@ from transformers import pipeline
 sentiment_analyzer = pipeline("sentiment-analysis")
 
 # Streamlit page configuration
-st.set_page_config(page_title="Sentiment Analysis App", layout="wide")
+st.set_page_config(page_title="Sentiment Analysis App",)
 
 # Page title
 st.title("Sentiment Analysis with Transformers")

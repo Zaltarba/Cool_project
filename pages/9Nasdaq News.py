@@ -16,7 +16,6 @@ feeds = {
 # Streamlit layout
 st.set_page_config(
 	page_title="Nasdaq News",
-	layout="wide",
 	page_icon="📬",
 )
 st.sidebar.success("Select a feature above.")

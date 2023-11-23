@@ -21,7 +21,6 @@ from utils.portfolio_optimizer import *
 
 st.set_page_config(
 	page_title="Portfolio Optimizer",
-	layout="wide",
 	page_icon="🚀",
 )
 st.sidebar.success("Select a feature above.")
