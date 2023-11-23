@@ -5,6 +5,7 @@ from utils.RSS_architecture import *
 import pandas as pd 
 import matplotlib.pyplot as plt
 import numpy as np
+import plotly.express as px
 
 # Assuming DataProvider is an Enum with your sources
 source_options = [source.value for source in DataProvider]
@@ -26,36 +27,33 @@ icons_path = {
     # Add more as needed
 }
 
-# Count the number of articles per category per data provider
-article_counts = {source.value: {category: len(articles) for category, articles in categories.items()} for source, categories in all_feeds.items()}
+# Aggregate the data with the date filter
+counts = {}
+for source, categories in all_feeds.items():
+    if source.value in selected_sources:
+        for category, articles in categories.items():
+            # Filter articles based on the minimal date selected
+            filtered_articles = [article for article in articles if is_after_min_date(article['date'], min_date)]
+            if category not in counts:
+                counts[category] = {}
+            counts[category][source.value] = len(filtered_articles)
 
-# Data for plotting
-categories = set()
-for counts in article_counts.values():
-    categories.update(counts.keys())
-categories = list(categories)
-data_provider_names = list(article_counts.keys())
-bar_data = {category: [article_counts.get(provider, {}).get(category, 0) for provider in data_provider_names] for category in categories}
+# Prepare the data for Plotly
+data = []
+for category, sources in counts.items():
+    for source, count in sources.items():
+        data.append({'Category': category, 'Source': source, 'Number of Articles': count, 'Date': min_date})
 
-# Plotting
-fig, ax = plt.subplots()
+# Create a DataFrame
+df = pd.DataFrame(data)
 
-# We need to set the position of each bar along the x-axis
-bar_width = 0.35
-index = np.arange(len(data_provider_names))
+# Create the bar plot with Plotly
+fig = px.bar(df, x='Source', y='Number of Articles', color='Category',
+             title='Number of Articles per Category per Data Provider Since ' + str(min_date),
+             labels={'Number of Articles': 'Number of Articles since ' + str(min_date)})
 
-for i, category in enumerate(categories):
-    ax.bar(index + i*bar_width, bar_data[category], bar_width, label=category)
-
-ax.set_xlabel('Data Provider')
-ax.set_ylabel('Number of Articles')
-ax.set_title('Number of articles per category per data provider')
-ax.set_xticks(index + bar_width / 2)
-ax.set_xticklabels(data_provider_names)
-ax.legend()
-
-st.pyplot(fig)
-
+# Display the plot in Streamlit
+st.plotly_chart(fig)
 
 # Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
