@@ -124,13 +124,19 @@ class NewYorkTimesFeedParser(BaseFeedParser):
     available_fields = BaseFeedParser.available_fields.copy()
     # Additional New York Times-specific methods or overrides
 
+class CoinTelegraphFeedParser(BaseFeedParser):
+    source = DataProvider.COINTELEGRAPH
+    available_fields = BaseFeedParser.available_fields.copy()
+    # Additional New York Times-specific methods or overrides
+
 class FeedManager:
     def __init__(self, feeds):
         self.feeds = feeds
         self.parsers = {
             DataProvider.CNBC: CNBCFeedParser,
             DataProvider.MARKETWATCH: MarketWatchFeedParser,
-            DataProvider.NYT: NewYorkTimesFeedParser
+            DataProvider.NYT: NewYorkTimesFeedParser,
+            DataProvider.COINTELEGRAPH: CoinTelegraphFeedParser, 
         }
 
     def fetch_all_feeds(self):
