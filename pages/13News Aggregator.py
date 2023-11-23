@@ -71,7 +71,7 @@ def generate_wordcloud(source_articles):
 # Place the word cloud in an expandable section at the desired location in your layout
 with st.expander("View Word Clouds"):
     # Create tabs for each data source
-    tabs = st.tabs([source.value for source in selected_sources])
+    tabs = st.tabs(selected_sources)
     for tab, source in zip(tabs, DataProvider):
         with tab:
             # Assuming that the 'fetch_all_feeds' function or similar has been called 
