@@ -10,8 +10,12 @@ class DataProvider(Enum):
     COINTELEGRAPH = "Coin Telegraph"
     BLOCKCHAINNEWS = "Blockchain News"
     SEEKINGALPHA = "Seeking Alpha"
+    SEC = "US Securities Exchange Commision"
 
 feeds = {
+    DataProvider.SEC:{
+        "Press Release":"https://www.sec.gov/news/pressreleases.rss", 
+    },
     DataProvider.CNBC:{
         "Top News": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
         "World News": "https://www.cnbc.com/id/100727362/device/rss/rss.html",
@@ -171,6 +175,11 @@ class SeekingAlphaFeedParser(BaseFeedParser):
     available_fields = BaseFeedParser.available_fields.copy()
     # Additional New York Times-specific methods or overrides
 
+class SECFeedParser(BaseFeedParser):
+    source = DataProvider.SEC
+    available_fields = BaseFeedParser.available_fields.copy()
+    # Additional New York Times-specific methods or overrides
+
 class FeedManager:
     def __init__(self, feeds):
         self.feeds = feeds
@@ -181,6 +190,7 @@ class FeedManager:
             DataProvider.COINTELEGRAPH: CoinTelegraphFeedParser, 
             DataProvider.BLOCKCHAINNEWS: BlockChainNewsFeedParser, 
             DataProvider.SEEKINGALPHA: SeekingAlphaFeedParser,
+            DataProvider.SEC: SECFeedParser, 
         }
 
     def fetch_all_feeds(self):
