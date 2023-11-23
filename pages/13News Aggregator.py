@@ -2,6 +2,7 @@ import streamlit as st
 import datetime as datetime
 from utils.rss_functions import *
 from utils.RSS_architecture import *
+import pandas as pd 
 
 # Assuming DataProvider is an Enum with your sources
 source_options = [source.value for source in DataProvider]
@@ -15,7 +16,7 @@ all_feeds = feed_manager.fetch_all_feeds()
 
 # Function to check if an article's date is after the selected minimum date
 def is_after_min_date(article_date, min_date):
-    return article_date >= min_date
+    return pd.to_datetime(article_date, utc=True) >= pd.to_datetime(min_date, utc=True)
 
 # Displaying the feeds
 st.write("test")
@@ -27,7 +28,7 @@ for source, categories in all_feeds.items():
         for category, articles in categories.items():
             st.write(f"Category: {category}")
             for article in articles:
-                article_date = article['date'].format(datetime) # Adjust the format as per your date format
+                article_date = article['date'] # Adjust the format as per your date format
                 if is_after_min_date(article_date, min_date):
                     st.write(f"Title: {article['title']}")
                     # Display other fields as required
