@@ -1,4 +1,5 @@
 from enum import Enum
+import feedparser
 
 class DataProvider(Enum):
     CNBC = "CNBC"
@@ -20,7 +21,7 @@ feeds = {
         "Economy":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258", 
         "Autos":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000101", 
         "Real Estate":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000115",
-        "Energy":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19836768",
+        "Energy":"https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&ids=19836768",
         }, 
     DataProvider.MARKETWATCH:{    
         "Top Stories":"http://feeds.marketwatch.com/marketwatch/topstories/",
@@ -40,8 +41,6 @@ feeds = {
         "Most Viewed":"https://rss.nytimes.com/services/xml/rss/nyt/MostViewed.xml", 
         },
 }
-
-import feedparser
 
 class BaseFeedParser:
 
