@@ -26,7 +26,7 @@ for source, categories in all_feeds.items():
         for category, articles in categories.items():
             st.write(f"Category: {category}")
             for article in articles:
-                article_date = datetime.strptime(article['date'], '%Y-%m-%d') # Adjust the format as per your date format
+                article_date = article['date'].format(datetime) # Adjust the format as per your date format
                 if is_after_min_date(article_date, min_date):
                     st.write(f"Title: {article['title']}")
                     # Display other fields as required
