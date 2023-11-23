@@ -1,10 +1,13 @@
 from enum import Enum
 import feedparser
+import re
+from html import unescape
 
 class DataProvider(Enum):
     CNBC = "CNBC"
     MARKETWATCH = "MarketWatch"
     NYT = "New York Times"
+    COINBASE = "Coinbase"
 
 feeds = {
     DataProvider.CNBC:{
@@ -40,7 +43,35 @@ feeds = {
         "Most Shared":"https://rss.nytimes.com/services/xml/rss/nyt/MostShared.xml", 
         "Most Viewed":"https://rss.nytimes.com/services/xml/rss/nyt/MostViewed.xml", 
         },
+    DataProvider.COINBASE:{
+        "Altcoin":"https://cointelegraph.com/rss/tag/altcoin",
+        "Bitcoin": "https://cointelegraph.com/rss/tag/bitcoin", 
+        "Blockchain":"https://cointelegraph.com/rss/tag/blockchain",
+        "Ethereum":"https://cointelegraph.com/rss/tag/ethereum",
+        "Litecoin":"https://cointelegraph.com/rss/tag/litecoin",
+        "Monero":"https://cointelegraph.com/rss/tag/monero",
+        "Regulation":"https://cointelegraph.com/rss/tag/regulation", 
+    },
 }
+
+def clean_html(raw_html):
+    """
+    This function removes HTML tags and decodes HTML entities.
+    
+    Args:
+    - raw_html (str): A string containing HTML.
+
+    Returns:
+    - text (str): A clean string without HTML tags and entities.
+    """
+    # Remove HTML tags
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    
+    # Decode HTML entities
+    cleantext = unescape(cleantext)
+    
+    return cleantext
 
 class BaseFeedParser:
 
@@ -60,15 +91,21 @@ class BaseFeedParser:
         cleaned_feed = []
         for entry in feed.entries:
             cleaned_entry = {
-                'source': self.source.value,  # Assuming source is an Enum
+                'source': self.source.value,
                 'title': entry.title if 'title' in entry else None,
                 'link': entry.link if 'link' in entry else None,
                 'date': entry.published if 'published' in entry else None,
-                # Add other fields based on their availability
             }
-            if 'summary' in self.available_fields and self.available_fields['summary']:
-                cleaned_entry['summary'] = entry.summary if 'summary' in entry else None
-            # Add similar conditionals for other fields
+            # Check for both 'summary' and 'description' keys
+            if 'summary' in entry:
+                content = entry.summary
+            elif 'description' in entry:
+                content = entry.description
+            else:
+                content = None
+            # Clean the content of HTML tags and entities
+            if content:
+                cleaned_entry['summary'] = clean_html(content)
             cleaned_feed.append(cleaned_entry)
         return cleaned_feed
     
