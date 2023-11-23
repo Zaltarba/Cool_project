@@ -7,10 +7,10 @@ from utils.RSS_architecture import *
 source_options = [source.value for source in DataProvider]
 selected_sources = st.multiselect('Select Data Sources:', source_options, default=source_options)
 selected_feeds = [source for source in DataProvider if source.value in selected_sources]
-
+st.write(len(selected_feeds))
 min_date = st.date_input("Select minimal publication date:")
 
-feed_manager = FeedManager({feed:feeds[feed] for feed in selected_feeds})
+feed_manager = FeedManager({feed:feeds[feed] for feed in feeds.keys()})
 all_feeds = feed_manager.fetch_all_feeds()
 
 # Function to check if an article's date is after the selected minimum date
