@@ -36,7 +36,7 @@ for source, categories in all_feeds.items():
                     col1, col2 = st.columns([1, 3])
                     with col1:
                         st.image("pics/temp.jpg")  # Optional: source/category icon
-                        st.caption(article_date.strftime("%B %d, %Y"))
+                        st.caption(article_date)
                     with col2:
                         st.markdown(f"##### [{article['title']}]({article['link']})")
                         st.write(article.get('summary', 'No summary available'))
