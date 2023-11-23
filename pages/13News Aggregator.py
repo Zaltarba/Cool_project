@@ -24,6 +24,39 @@ icons_path = {
     # Add more as needed
 }
 
+import matplotlib.pyplot as plt
+
+# Count the number of articles per category per data provider
+article_counts = {source.value: {category: len(articles) for category, articles in categories.items()} for source, categories in all_feeds.items()}
+
+# Data for plotting
+categories = set()
+for counts in article_counts.values():
+    categories.update(counts.keys())
+categories = list(categories)
+data_provider_names = list(article_counts.keys())
+bar_data = {category: [article_counts.get(provider, {}).get(category, 0) for provider in data_provider_names] for category in categories}
+
+# Plotting
+fig, ax = plt.subplots()
+
+# We need to set the position of each bar along the x-axis
+bar_width = 0.35
+index = np.arange(len(data_provider_names))
+
+for i, category in enumerate(categories):
+    ax.bar(index + i*bar_width, bar_data[category], bar_width, label=category)
+
+ax.set_xlabel('Data Provider')
+ax.set_ylabel('Number of Articles')
+ax.set_title('Number of articles per category per data provider')
+ax.set_xticks(index + bar_width / 2)
+ax.set_xticklabels(data_provider_names)
+ax.legend()
+
+st.pyplot(fig)
+
+
 # Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
     if source.value in selected_sources:
