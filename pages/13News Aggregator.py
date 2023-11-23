@@ -55,6 +55,32 @@ fig = px.bar(df, x='Source', y='Number of Articles', color='Category',
 # Display the plot in Streamlit
 st.plotly_chart(fig)
 
+import nltk
+from nltk.corpus import stopwords
+
+english_stop_words = set(stopwords.words('english'))
+
+def generate_wordcloud(source_articles):
+    text = " ".join(article['title'] for article in source_articles)
+    wordcloud = WordCloud(width = 800, height = 400, background_color ='black', stopwords = english_stop_words ).generate(text)
+    plt.figure(figsize = (8, 4), facecolor = None) 
+    plt.imshow(wordcloud) 
+    plt.axis("off") 
+    plt.tight_layout(pad = 0) 
+    st.set_option('deprecation.showPyplotGlobalUse', False) # to disable warning
+    st.pyplot()
+
+# Place the word cloud in an expandable section at the desired location in your layout
+with st.expander("View Word Clouds"):
+    # Create tabs for each data source
+    tabs = st.tabs([source.value for source in DataProvider if source.value in selected_sources])
+    for tab, source in zip(tabs, DataProvider):
+        with tab:
+            # Assuming that the 'fetch_all_feeds' function or similar has been called 
+            # and 'all_feeds' is populated with the articles data
+            source_articles = [article for categories in all_feeds[source].values() for article in categories]
+            generate_wordcloud(source_articles)
+
 # Displaying the feeds with a card-like layout
 for source, categories in all_feeds.items():
     if source.value in selected_sources:
