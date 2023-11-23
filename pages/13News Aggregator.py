@@ -22,7 +22,7 @@ st.write("test")
 for source, categories in all_feeds.items():
     st.write("test")
     st.write(source)
-    if source in selected_sources:
+    if source.value in selected_sources:
         st.write(f"Source: {source}")
         for category, articles in categories.items():
             st.write(f"Category: {category}")
