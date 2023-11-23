@@ -29,7 +29,7 @@ for source, categories in all_feeds.items():
     if source.value in selected_sources:
         st.header(f"Source: {source.value}")
         for category, articles in categories.items():
-            if len([article for article in articles if is_after_min_date(article_date, min_date)]) > 0:
+            if len([article for article in articles if is_after_min_date(article['date'], min_date)]) > 0:
                 with st.expander(f"Category: {category}"): 
                     for article in articles:
                         article_date = article['date']  # Adjust the format as per your date format
