@@ -57,7 +57,7 @@ st.plotly_chart(fig)
 
 import nltk
 from nltk.corpus import stopwords
-
+nltk.download('stopwords')
 english_stop_words = set(stopwords.words('english'))
 
 def generate_wordcloud(source_articles):
