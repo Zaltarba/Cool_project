@@ -10,7 +10,7 @@ import plotly.express as px
 
 st.set_page_config(
 	page_title="RSS News Aggregator",
-	layout="wide",
+	layout="center",
 	page_icon="📳",
 )
 st.sidebar.success("Select a feature above.")
