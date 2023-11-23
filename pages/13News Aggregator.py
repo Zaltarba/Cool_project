@@ -8,8 +8,8 @@ source_options = [source.value for source in DataProvider]
 selected_sources = st.multiselect('Select Data Sources:', source_options, default=source_options)
 min_date = st.date_input("Select minimal publication date:")
 
-# Assuming feed_manager is an instance of your FeedManager class
-all_feeds = FeedManager.fetch_all_feeds({feed:feeds[feed] for feed in source_options})
+feed_manager = FeedManager(feeds)
+all_feeds = feed_manager.fetch_all_feeds({feed:feeds[feed] for feed in source_options})
 
 # Function to check if an article's date is after the selected minimum date
 def is_after_min_date(article_date, min_date):
