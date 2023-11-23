@@ -49,8 +49,8 @@ df = pd.DataFrame(data)
 
 # Create the bar plot with Plotly
 fig = px.bar(df, x='Source', y='Number of Articles', color='Category',
-             title='Number of Articles per Category per Data Provider Since ' + str(min_date),
-             labels={'Number of Articles': 'Number of Articles since ' + str(min_date)})
+             title='Number of articles per category per data provider since ' + str(min_date),
+             labels={'Number of articles': 'Number of articles since ' + str(min_date)})
 
 # Display the plot in Streamlit
 st.plotly_chart(fig)
