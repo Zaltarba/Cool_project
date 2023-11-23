@@ -21,7 +21,7 @@ def is_after_min_date(article_date, min_date):
     return pd.to_datetime(article_date, utc=True) >= pd.to_datetime(min_date, utc=True)
 
 icons_path = {
-    "CNBC": "pics/CNBC_icon.jpg",
+    "CNBC": "pics/CNBC_icon.png",
     "MarketWatch": "pics/MW_icon.jpg",
     "New York Times": "pics/NYT_icon.jpg",
     # Add more as needed
